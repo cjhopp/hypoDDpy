@@ -6,8 +6,8 @@
 import glob
 import sys, os
 sys.path.insert('/home/chet/hypoDDpy')
+
 from hypoddpy import HypoDDRelocator_parallel
-from sympy.plotting.pygletplot import plot_interval
 
 # Location of input QML catalog
 cat_dir = r'/home/steve/PhD_Unix/Tomography/RK-NM_2012-2015/3_NonLinLoc/run2/'
