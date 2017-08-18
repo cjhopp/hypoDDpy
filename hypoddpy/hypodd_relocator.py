@@ -12,7 +12,7 @@ from obspy.signal.cross_correlation import xcorr_pick_correction
 from obspy.io.xseed import Parser
 from obspy import read_inventory
 import os
-#import progressbar
+import progressbar
 import shutil
 import subprocess
 import sys
@@ -34,7 +34,7 @@ class HypoDDRelocator_parallel(object):
     def __init__(self, working_dir, cc_time_before, cc_time_after, cc_maxlag,
                  cc_filter_min_freq, cc_filter_max_freq, cc_p_phase_weighting,
                  cc_s_phase_weighting, cc_min_allowed_cross_corr_coeff,
-		 ph2dt_sets, hypodd_sets, cc_plot_int, cc_plot_dir):
+		         ph2dt_sets, hypodd_sets, cc_plot_int, cc_plot_dir):
         """
         :param working_dir: The working directory where all temporary and final
             files will be placed.
@@ -935,9 +935,10 @@ class HypoDDRelocator_parallel(object):
                       str(evt_pair_count) + ' event pairs.')               
         
         start_time = time.time()
-        Parallel(n_jobs=ncores)(delayed(cross_correlate_evt_pairs)
-                                           (self, cc_dir, cc_plot_dir, evt_pairs) 
-                                           for evt_pairs in evt_pair_jobs)
+        Parallel(n_jobs=ncores)(
+            delayed(cross_correlate_evt_pairs)(
+                self, cc_dir, cc_plot_dir, evt_pairs)
+            for evt_pairs in evt_pair_jobs)
         time_taken = time.time() - start_time
         print('Cross-correlation took ' + str(time_taken / (60*60)) + ' hours')
         #pbar.finish()
@@ -1278,7 +1279,7 @@ class HypoDDRelocator_parallel(object):
         plt.savefig(relocated_filename)
         self.log("Output figure: %s" % relocated_filename)
 
-def cross_correlate_evt_pairs(self, cc_dir, cc_plot_dir, evt_pairs):
+def cross_correlate_evt_pair(self, cc_dir, cc_plot_dir, evt_pair):
     tot_evt_pairs = len(evt_pairs)
     evt_pair_num = 0
     for evt_pair in evt_pairs:
