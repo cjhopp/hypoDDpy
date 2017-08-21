@@ -5,31 +5,28 @@
 
 import glob
 import sys, os
-sys.path.insert('/home/chet/hypoDDpy')
+# sys.path.insert('/home/chet/hypoDDpy')
 
-from hypoddpy import HypoDDRelocator_parallel
+from hypoddpy import HypoDDRelocator
 
 # Location of input QML catalog
-cat_dir = r'/home/steve/PhD_Unix/Tomography/RK-NM_2012-2015/3_NonLinLoc/run2/'
-cat_file = r'RK-NM_2012-15_autoP&Spicks_NLLoc_Run2.xml'
-
+cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 # time slice directory
-data_dir = r'/home/steve/PhD_Unix/Tomography/RK-NM_2012-2015/Time_slices2'
+wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/all_MF_dets'
 
 # station files dir
-stat_dir = r'/home/steve/Desktop/Tomography/Station_Files/'
+sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # working dir
-work_dir = r'/home/steve/PhD_Unix/Tomography/RK-NM_2012-2015/7_hypoDD'
+work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD'
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = r'RK-NM_2012-15_autoP&Spicks_NLLoc_Run2.xml'
-
+out_file = 'det_cat_mcc0.4_shift0.2_ALL_LOCATED_HypoDD.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
-ncores = 1
+ncores = 10
 
 ### ph2dt Settings
 ph2dt_sets = {
@@ -130,15 +127,16 @@ cc_plot_int = 0
         accepted.
     """
 
-relocator = HypoDDRelocator_parallel(working_dir=work_dir,
+relocator = HypoDDRelocator_parallel(
+    working_dir=work_dir,
     cc_time_before=0.1,
     cc_time_after=0.2,
     cc_maxlag=0.2,
-    cc_filter_min_freq=1.0,
-    cc_filter_max_freq=10.0,
+    cc_filter_min_freq=3.0,
+    cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
     cc_s_phase_weighting= {"E": 0.5, "N": 0.5},
-    cc_min_allowed_cross_corr_coeff=0.8,
+    cc_min_allowed_cross_corr_coeff=0.5,
     ph2dt_sets=ph2dt_sets, 
     hypodd_sets=hypodd_sets,
     cc_plot_int=cc_plot_int,
@@ -160,15 +158,14 @@ relocator.setup_velocity_model(
     vp_vs_ratio=1.7)
 
 # Add the necessary files. Call a function multiple times if necessary.
-relocator.add_event_files(os.path.join(cat_dir, cat_file))
+relocator.add_event_files(cat_file)
 
-# Find data file matches
 data_file_list = []
-for root, dirs, files in os.walk(data_dir):
+for root, dirs, files in os.walk(wav_dir):
     for file in files:
         data_file_list.append(os.path.join(root, file))
 relocator.add_waveform_files(data_file_list)
-relocator.add_station_files(glob.glob(stat_dir + "*.xml"))
+relocator.add_station_files(glob.glob(sta_file))
 
 # Start the relocation with the desired output file.
 relocator.start_relocation(output_event_file=os.path.join(out_dir, out_file),

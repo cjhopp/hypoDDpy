@@ -31,7 +31,7 @@ from hypodd_compiler import HypoDDCompiler
 class HypoDDException(Exception):
     pass
 
-class HypoDDRelocator_parallel(object):
+class HypoDDRelocator(object):
     def __init__(self, working_dir, cc_time_before, cc_time_after, cc_maxlag,
                  cc_filter_min_freq, cc_filter_max_freq, cc_p_phase_weighting,
                  cc_s_phase_weighting, cc_min_allowed_cross_corr_coeff,
@@ -100,10 +100,9 @@ class HypoDDRelocator_parallel(object):
             "cc_plot_int" : cc_plot_int}
 	
         # dictionaries containing parameters to use in ph2dt and hypodd runs
-	self.ph2dt_sets = ph2dt_sets
-        self.hypodd_sets = hypodd_sets        
-	self.cc_results = {}
-
+        self.ph2dt_sets = ph2dt_sets
+        self.hypodd_sets = hypodd_sets
+        self.cc_results = {}
         # Setup logging.
         logging.basicConfig(level=logging.DEBUG,
                             filename=os.path.join(self.working_dir, "log.txt"),
@@ -1143,7 +1142,7 @@ class HypoDDRelocator_parallel(object):
         """
         Creates some plots of the relocated event Catalog.
         """
-        import matplotlib.pylab as plt
+        import matplotlib.pylplot as plt
         from matplotlib.cm import get_cmap
         from matplotlib.colors import ColorConverter
 
@@ -1253,7 +1252,7 @@ class HypoDDRelocator_parallel(object):
         plt.savefig(relocated_filename)
         self.log("Output figure: %s" % relocated_filename)
 
-def cross_correlate_evt_pair(self, cc_dir, cc_plot_dir, evt_pair):
+def cross_correlate_evt_pair(self, cc_dir, evt_pair):
     event_1, event_2 = evt_pair
     # filename for event_pair
     event_pair_file = os.path.join(cc_dir, "%i_%i.txt" %
