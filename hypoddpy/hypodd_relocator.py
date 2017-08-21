@@ -13,18 +13,13 @@ from obspy.signal.cross_correlation import xcorr_pick_correction
 from obspy.io.xseed import Parser
 from obspy import read_inventory
 import os
-# import progressbar
 import shutil
 import subprocess
 import sys
 import warnings
 from joblib import Parallel, delayed
 import time
-import dill as pickle
 
-import imp
-foo = imp.load_source('hypodd_compiler',
-                      "/Users/home/sewellst/PhD_Unix/hypoDDpy-master/hypoddpy/hypodd_compiler.py")
 from hypodd_compiler import HypoDDCompiler
 
 
