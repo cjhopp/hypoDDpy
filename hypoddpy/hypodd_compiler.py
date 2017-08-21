@@ -14,7 +14,7 @@ If all three files are present and the hypoDD.inc that would be used for a new
 compilation is identical to the one already present nothing will happen as the
 end result would be the same.
 """
-import md5
+import hashlib
 import os
 import shutil
 import subprocess
@@ -26,7 +26,7 @@ HYPODD_ARCHIVE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'src',
     'HYPODD_2.1b.tar.gz'))
 
 # Note this Hash is from the tar.gz file you got, either change this to your
-# correct one using the function call md5.md5(open_file.read()).hexdigest()
+# correct one using the function call hashlib.md5(open_file.read()).hexdigest()
 # or simply comment out the line: if md5_hash != HYPODD_MD5_HASH:    
 HYPODD_MD5_HASH = "ac7fb5829abef23aa91f1f8a115e2b45"
 
@@ -78,7 +78,7 @@ class HypoDDCompiler(object):
             raise HypoDDCompilationError(msg)
         # Check if the file is correct.
         with open(HYPODD_ARCHIVE, "rb") as open_file:
-            md5_hash = md5.md5(open_file.read()).hexdigest()
+            md5_hash = hashlib.md5(open_file.read()).hexdigest()
         if md5_hash != HYPODD_MD5_HASH:
             msg = "md5 hash of the HypoDD archive is not correct"
             raise HypoDDCompilationError(msg)

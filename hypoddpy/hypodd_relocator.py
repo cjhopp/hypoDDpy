@@ -20,7 +20,7 @@ import warnings
 from joblib import Parallel, delayed
 import time
 
-from hypodd_compiler import HypoDDCompiler
+from hypoddpy.hypodd_compiler import HypoDDCompiler
 
 
 class HypoDDException(Exception):

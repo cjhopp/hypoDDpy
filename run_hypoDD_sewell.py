@@ -6,7 +6,7 @@ import glob
 import sys, os
 # sys.path.insert('/home/chet/hypoDDpy')
 
-from hypoddpy import HypoDDRelocator
+from hypoddpy.hypodd_relocator import HypoDDRelocator
 
 # Location of input QML catalog
 cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
