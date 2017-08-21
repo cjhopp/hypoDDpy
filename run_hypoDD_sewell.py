@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-""" This program runs hypoDDpy.
-    """
+""" This program runs hypoDDpy."""
 
 import glob
 import sys, os
@@ -135,7 +134,7 @@ relocator = HypoDDRelocator(
     cc_filter_min_freq=3.0,
     cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
-    cc_s_phase_weighting= {"E": 0.5, "N": 0.5},
+    cc_s_phase_weighting= {},
     cc_min_allowed_cross_corr_coeff=0.5,
     ph2dt_sets=ph2dt_sets, 
     hypodd_sets=hypodd_sets,
