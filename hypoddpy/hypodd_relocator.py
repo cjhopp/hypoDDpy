@@ -156,10 +156,10 @@ class HypoDDRelocator(object):
         Adds all files in event_files to self.event_files. All files will be
         verified to exist but no further checks are done.
         """
-        if isinstance(event_files, basestring):
+        if isinstance(event_files, str):
             event_files = [event_files]
         for event_file in event_files:
-            if not isinstance(event_file, basestring):
+            if not isinstance(event_file, str):
                 msg = "%s is not a filename." % event_file
                 warnings.warn(msg)
                 continue
@@ -174,10 +174,10 @@ class HypoDDRelocator(object):
         Adds all files in station_files to self.station_files. All files will
         be verified to exist but no further checks are done.
         """
-        if isinstance(station_files, basestring):
+        if isinstance(station_files, str):
             station_files = [station_files]
         for station_file in station_files:
-            if not isinstance(station_file, basestring):
+            if not isinstance(station_file, str):
                 msg = "%s is not a filename." % station_file
                 warnings.warn(msg)
                 continue
@@ -192,10 +192,10 @@ class HypoDDRelocator(object):
         Adds all files in waveform_files to self.waveform_files. All files will
         be verified to exist but no further checks are done.
         """
-        if isinstance(waveform_files, basestring):
+        if isinstance(waveform_files, str):
             waveform_files = [waveform_files]
         for waveform_file in waveform_files:
-            if not isinstance(waveform_file, basestring):
+            if not isinstance(waveform_file, str):
                 msg = "%s is not a filename." % waveform_file
                 warnings.warn(msg)
                 continue
@@ -232,7 +232,7 @@ class HypoDDRelocator(object):
         """
         allowed_keys = ["MINWGHT", "MAXDIST", "MAXSEP", "MAXNGH", "MINLNK",
                         "MINOBS", "MAXOBS"]
-        if not isinstance(key, basestring):
+        if not isinstance(key, str):
             msg = "The configuration key needs to be a string"
             warnings.warn(msg)
             return
