@@ -157,15 +157,18 @@ relocator.setup_velocity_model(
     vp_vs_ratio=1.7)
 
 # Add the necessary files. Call a function multiple times if necessary.
+print('Adding event files to relocator object')
 relocator.add_event_files(cat_file)
-
+print('Crawling wav directories')
 data_file_list = []
 for root, dirs, files in os.walk(wav_dir):
     for file in files:
         data_file_list.append(os.path.join(root, file))
+print('Adding wavs to relocator object')
 relocator.add_waveform_files(data_file_list)
+print('Adding station files to relocator object')
 relocator.add_station_files(glob.glob(sta_file))
-
+print('Starting relocation run')
 # Start the relocation with the desired output file.
 relocator.start_relocation(output_event_file=os.path.join(out_dir, out_file),
                            ncores=ncores)
