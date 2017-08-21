@@ -1,2 +1,1 @@
-from . import finding
-from hypodd_relocator import HypoDDRelocator
+from hypoddpy.hypodd_relocator import HypoDDRelocator
