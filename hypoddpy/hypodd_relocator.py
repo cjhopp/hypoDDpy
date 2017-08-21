@@ -270,11 +270,11 @@ class HypoDDRelocator(object):
         logging.info(string)
         # Info is green
         if level == "info":
-            print "\033[0;32m" + ">>> " + string + "\033[1;m"
+            print("\033[0;32m" + ">>> " + string + "\033[1;m")
         # Everything else is currently red.
         else:
             level = level.lower().capitalize()
-            print "\033[1;31m" + ">>> " + level + ": " + string + "\033[1;m"
+            print("\033[1;31m" + ">>> " + level + ": " + string + "\033[1;m")
         sys.stdout.flush()
 
     def _parse_station_files(self):
