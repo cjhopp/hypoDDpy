@@ -127,7 +127,7 @@ cc_plot_int = 0
         accepted.
     """
 
-relocator = HypoDDRelocator_parallel(
+relocator = HypoDDRelocator(
     working_dir=work_dir,
     cc_time_before=0.1,
     cc_time_after=0.2,
