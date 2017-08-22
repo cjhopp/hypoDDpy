@@ -331,7 +331,7 @@ class HypoDDRelocator(object):
             self.log("station.dat input file already exists.")
             return
         station_strings = []
-        for key, value in self.stations.iteritems():
+        for key, value in iteritems(self.stations):
             station_strings.append("%s %.6f %.6f %i" % (key, value["latitude"],
                 value["longitude"], value["elevation"]))
         station_string = "\n".join(station_strings)
@@ -559,7 +559,7 @@ class HypoDDRelocator(object):
                 longs.append(event["origin_longitude"])
                 # Convert to km.
                 depths.append(event["origin_depth"] / 1000.0)
-            for _, station in self.stations.iteritems():
+            for _, station in iteritems(self.stations):
                 lats.append(station["latitude"])
                 longs.append(station["longitude"])
                 # station elevation is in meter.
@@ -858,7 +858,7 @@ class HypoDDRelocator(object):
         if purge:
             self.cc_results = cc_
         else:
-            for id1, items in cc_.iteritems():
+            for id1, items in iteritems(cc_):
                 self.cc_results.setdefault(id1, {}).update(items)
         self.log("Successfully loaded cross correlation results from file: "
                  "%s." % filename)
@@ -1137,7 +1137,7 @@ class HypoDDRelocator(object):
         """
         Creates some plots of the relocated event Catalog.
         """
-        import matplotlib.pylplot as plt
+        import matplotlib.pyplot as plt
         from matplotlib.cm import get_cmap
         from matplotlib.colors import ColorConverter
 
