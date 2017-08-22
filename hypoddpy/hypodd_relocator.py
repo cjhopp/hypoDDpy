@@ -634,10 +634,10 @@ class HypoDDRelocator(object):
         """
         logfile = os.path.join(self.working_dir, "compilation.log")
         self.log("Initating HypoDD compilation (logfile: %s)..." % logfile)
-        with open(logfile, "wb") as fh:
+        with open(logfile, "w") as fh:
             def logfunc(line):
-                fh.write(line)
-                fh.write(os.linesep)
+                fh.write(str(line))
+                fh.write(str(os.linesep))
             compiler = HypoDDCompiler(working_dir=self.working_dir,
                                       log_function=logfunc)
             compiler.configure(MAXEVE=len(self.events) + 30,
