@@ -19,6 +19,7 @@ import sys
 import warnings
 from joblib import Parallel, delayed
 import time
+import dill as pickle
 
 from hypoddpy.hypodd_compiler import HypoDDCompiler
 
