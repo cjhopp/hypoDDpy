@@ -37,7 +37,7 @@ AUTHOR_EMAIL = 'krischer@geophysik.uni-muenchen.de'
 URL = 'None so far...'
 LICENSE = 'GNU General Public License, version 3 (GPLv3)'
 KEYWORDS = ['seismology', 'earthquakes', 'relocation']
-INSTALL_REQUIRES = ['obspy']
+INSTALL_REQUIRES = ['obspy', 'dill']
 ENTRY_POINTS = {}
 
 

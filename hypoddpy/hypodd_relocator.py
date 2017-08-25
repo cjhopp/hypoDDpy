@@ -1,5 +1,7 @@
 from __future__ import division
 from future.utils import iteritems
+
+import dill as pickle
 import copy
 import fnmatch
 import glob
@@ -19,7 +21,6 @@ import sys
 import warnings
 from joblib import Parallel, delayed
 import time
-import dill as pickle
 
 from hypoddpy.hypodd_compiler import HypoDDCompiler
 
