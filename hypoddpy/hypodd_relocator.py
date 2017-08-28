@@ -1449,7 +1449,7 @@ def cross_correlate_evt_pair(event_info, events, waveform_information,
                         continue
                 except Exception as err:
                     # XXX: Maybe maxlag is too short?
-                    if not err.message.startswith("Less than 3"):
+                    if not str(err).startswith("Less than 3"):
                         msg = "Error during cross correlating: "
                         msg += str(err)
                         print(msg)
