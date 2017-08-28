@@ -1,7 +1,8 @@
 from __future__ import division
 from future.utils import iteritems
 
-import dill as pickle
+import dill
+dill.extend(True) # "Bootstrap" to allow pickle to serialize dill types
 import copy
 import fnmatch
 import glob
