@@ -1454,7 +1454,7 @@ def cross_correlate_evt_pair(event_info, events, waveform_information,
                         msg += str(err)
                         print(msg)
                         cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                        continue
+                    continue
             all_cross_correlations.append((pick2_corr, cross_corr_coeff,
                                            channel_weight))
         if len(all_cross_correlations) == 0:
