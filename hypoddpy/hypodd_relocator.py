@@ -1451,7 +1451,7 @@ def cross_correlate_evt_pair(event_info, events, waveform_information,
                     # XXX: Maybe maxlag is too short?
                     if not err.message.startswith("Less than 3"):
                         msg = "Error during cross correlating: "
-                        msg += err.message
+                        msg += str(err)
                         print(msg)
                         cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
                         continue
