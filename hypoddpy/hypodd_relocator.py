@@ -1468,7 +1468,7 @@ def cross_correlate_evt_pair(event_info, events, waveform_information,
         weight = sum([_i[2] for _i in all_cross_correlations])
         pick2_corr /= weight
         cross_corr_coeff /= weight
-        self.cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = (pick2_corr, cross_corr_coeff)
+        cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = (pick2_corr, cross_corr_coeff)
         # If the cross_corr_coeff is under the allowed limit, discard it.
         if cross_corr_coeff < \
                 cc_param["cc_min_allowed_cross_corr_coeff"]:
