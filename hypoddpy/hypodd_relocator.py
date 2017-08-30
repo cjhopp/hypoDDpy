@@ -1,8 +1,7 @@
 from __future__ import division
 from future.utils import iteritems
 
-# import dill
-# dill.extend(True) # "Bootstrap" to allow pickle to serialize dill types
+from builtins import range
 import copy
 import fnmatch
 import glob
@@ -891,7 +890,7 @@ class HypoDDRelocator(object):
         """
         ct_file_path = os.path.join(self.paths["input_files"], "dt.cc")
         if os.path.exists(ct_file_path):
-            self.log("ct.cc input file already exists")
+            self.log("dt.cc input file already exists")
             return
         # This is by far the lengthiest operation and will be broken up in
         # smaller steps
@@ -906,22 +905,26 @@ class HypoDDRelocator(object):
             raise HypoDDException(msg)
         event_id_pairs = self.get_event_id_pairs(cc_dir, dt_ct_path)
         start_time = time.time()
-        # Create pool workers and pass them every event pair.
+        # Create list of all kwargs for correlation function
+        evs = [(evt_pair, {'event_1_id': self.event_map[evt_pair[0]],
+                           'event_2_id': self.event_map[evt_pair[1]]})
+               for evt_pair in event_id_pairs]
+        # Partition evt pairs into ncores chunks? Must be a better option
+        event_pair_lists = [evs[i::ncores] for i in range(ncores)]
+        # Create pool workers and pass them event pair lists.
         # This will run each event pair twice...so we'll deal
         # with that later
         results = Parallel(n_jobs=ncores)(
-                    delayed(cross_correlate_evt_pair)(
-                        event_info={'event_1_id': self.event_map[evt_pair[0]],
-                                    'event_2_id': self.event_map[evt_pair[1]],
-                                    'evt_pair': evt_pair},
+                    delayed(cross_correlate_evt_pairs)(
+                        events_info=evt_pair_list,
                         events=self.events,
                         waveform_information=self.waveform_information,
                         _find_data=_find_data,
                         cc_param=self.cc_param,
                         cc_dir=cc_dir)
-                        for evt_pair in event_id_pairs)
+                        for evt_pair_list in event_pair_lists)
         # Now update self.cc_results from all correlation results
-        # XXX TODO DO WE NEED TO MAKE SURE WE'RE ONLY ADDING UNIQUE PAIRS?
+        # Does this account for double counting of events??
         for id1, items in iteritems(results):
             self.cc_results.setdefault(id1, {}).update(items)
         time_taken = time.time() - start_time
@@ -1263,232 +1266,233 @@ def _find_data(waveform_information, station_id, starttime, duration):
         return False
     return list(set(filenames))
 
-def cross_correlate_evt_pair(event_info, events, waveform_information,
-                             _find_data, cc_param, cc_dir):
+def cross_correlate_evt_pairs(event_pair_list, events, waveform_information,
+                              _find_data, cc_param, cc_dir):
     cc_results = {}
-    event_1, event_2 = event_info['evt_pair']
-    # filename for event_pair
-    event_pair_file = os.path.join(cc_dir, "%i_%i.txt" %
-                                   (event_1, event_2))
-    if os.path.exists(event_pair_file):
-        return
-    current_pair_strings = []
-    # Find the corresponding events.
-    event_id_1 = event_info['event_1_id']
-    event_id_2 = event_info['event_2_id']
-    print('Event pair is ' + event_id_1 + ' : ' + event_id_2)
-    event_1_dict = event_2_dict = None
-    for event in events:
-        if event["event_id"] == event_id_1:
-            event_1_dict = event
-        if event["event_id"] == event_id_2:
-            event_2_dict = event
-        if event_1_dict is not None and event_2_dict is not None:
-            break
-    # Some safety measures to ensure the script keeps running even if
-    # something unexpected happens.
-    if event_1_dict is None:
-        msg = "Event %s not be found. This is likely a bug." % \
-            event_id_1
-        print(msg)
-        return
-    if event_2_dict is None:
-        msg = "Event %s not be found. This is likely a bug." % \
-            event_id_2
-        print(msg)
-        return
-    # Write the leading string in the dt.cc file.
-    current_pair_strings.append(
-        "# {event_id_1}  {event_id_2} 0.0".format(
-            event_id_1=event_1, event_id_2=event_2))
-    # Now try to cross-correlate as many picks as possible.
-    for pick_1 in event_1_dict["picks"]:
-        pick_1_station_id = pick_1["station_id"]
-        pick_1_phase = pick_1["phase"]
-        # Try to find the corresponding pick for the second event.
-        pick_2 = None
-        for pick in event_2_dict["picks"]:
-            if pick["station_id"] == pick_1_station_id and \
-                    pick["phase"] == pick_1_phase:
-                pick_2 = pick
+    for evt_pair_tup in event_pair_list:
+        event_1, event_2 = evt_pair_tup[0]
+        # Filename for event_pair
+        event_pair_file = os.path.join(cc_dir, "%i_%i.txt" %
+                                       (event_1, event_2))
+        if os.path.exists(event_pair_file):
+            return
+        current_pair_strings = []
+        # Find the corresponding events.
+        event_id_1 = evt_pair_tup[1]['event_1_id']
+        event_id_2 = evt_pair_tup[1]['event_2_id']
+        print('Event pair is ' + event_id_1 + ' : ' + event_id_2)
+        event_1_dict = event_2_dict = None
+        for event in events:
+            if event["event_id"] == event_id_1:
+                event_1_dict = event
+            if event["event_id"] == event_id_2:
+                event_2_dict = event
+            if event_1_dict is not None and event_2_dict is not None:
                 break
-        # No corresponding pick could be found.
-        if pick_2 is None:
-            continue
-        station_id = pick_1["station_id"]
-        # Try to find data for both picks.
-        data_files_1 = _find_data(waveform_information,
-                                  station_id,
-                                  pick_1["pick_time"] -
-                                  cc_param["cc_time_before"],
-                                  cc_param["cc_time_before"] +
-                                  cc_param["cc_time_after"])
-        data_files_2 = _find_data(waveform_information,
-                                  station_id,
-                                  pick_2["pick_time"] -
-                                  cc_param["cc_time_before"],
-                                  cc_param["cc_time_before"] +
-                                  cc_param["cc_time_after"])
-        # If any pick has no data, skip this pick pair.
-        if data_files_1 is False or data_files_2 is False:
-            continue
-        # Read all files.
-        stream_1 = Stream()
-        stream_2 = Stream()
-        for waveform_file in data_files_1:
-            stream_1 += read(waveform_file, starttime=pick_1["pick_time"]-1, endtime=pick_1["pick_time"]+5)
-        for waveform_file in data_files_2:
-            stream_2 += read(waveform_file, starttime=pick_2["pick_time"]-1, endtime=pick_2["pick_time"]+5)
-        # Get the corresponing pick weighting dictionary.
-        if pick_1_phase == "P":
-            pick_weight_dict = cc_param[
-                "cc_p_phase_weighting"]
-        elif pick_1_phase == "S":
-            pick_weight_dict = cc_param[
-                "cc_s_phase_weighting"]
-        all_cross_correlations = []
-        # Loop over all picks and weight them.
-        for (channel, channel_weight) in iteritems(pick_weight_dict):
-            if channel_weight == 0.0:
+        # Some safety measures to ensure the script keeps running even if
+        # something unexpected happens.
+        if event_1_dict is None:
+            msg = "Event %s not be found. This is likely a bug." % \
+                event_id_1
+            print(msg)
+            return
+        if event_2_dict is None:
+            msg = "Event %s not be found. This is likely a bug." % \
+                event_id_2
+            print(msg)
+            return
+        # Write the leading string in the dt.cc file.
+        current_pair_strings.append(
+            "# {event_id_1}  {event_id_2} 0.0".format(
+                event_id_1=event_1, event_id_2=event_2))
+        # Now try to cross-correlate as many picks as possible.
+        for pick_1 in event_1_dict["picks"]:
+            pick_1_station_id = pick_1["station_id"]
+            pick_1_phase = pick_1["phase"]
+            # Try to find the corresponding pick for the second event.
+            pick_2 = None
+            for pick in event_2_dict["picks"]:
+                if pick["station_id"] == pick_1_station_id and \
+                        pick["phase"] == pick_1_phase:
+                    pick_2 = pick
+                    break
+            # No corresponding pick could be found.
+            if pick_2 is None:
                 continue
-            # Filter the files to obtain the correct trace.
-            network, station = station_id.split(".")
-            st_1 = stream_1.select(network=network, station=station,
-                                   channel="*%s" % channel)
-            st_2 = stream_2.select(network=network, station=station,
-                                   channel="*%s" % channel)
-            max_starttime_st_1 = pick_1["pick_time"] - \
-                cc_param["cc_time_before"]
-            min_endtime_st_1 = pick_1["pick_time"] + \
-                cc_param["cc_time_after"]
-            max_starttime_st_2 = pick_2["pick_time"] - \
-                cc_param["cc_time_before"]
-            min_endtime_st_2 = pick_2["pick_time"] + \
-                cc_param["cc_time_after"]
-            # Attempt to find the correct trace.
-            for trace in st_1:
-                if trace.stats.starttime > max_starttime_st_1 or \
-                   trace.stats.endtime < min_endtime_st_1:
-                    st_1.remove(trace)
-            for trace in st_2:
-                if trace.stats.starttime > max_starttime_st_2 or \
-                   trace.stats.endtime < min_endtime_st_2:
-                    st_2.remove(trace)
-
-            # cleanup merges, in case the event is included in
-            # multiple traces (happens for events with very close
-            # origin times)
-            st_1.merge(-1)
-            st_2.merge(-1)
-
-            if len(st_1) > 1:
-                msg = "More than one matching trace found for {pick}"
-                print(msg.format(pick=str(pick_1)))
-                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+            station_id = pick_1["station_id"]
+            # Try to find data for both picks.
+            data_files_1 = _find_data(waveform_information,
+                                      station_id,
+                                      pick_1["pick_time"] -
+                                      cc_param["cc_time_before"],
+                                      cc_param["cc_time_before"] +
+                                      cc_param["cc_time_after"])
+            data_files_2 = _find_data(waveform_information,
+                                      station_id,
+                                      pick_2["pick_time"] -
+                                      cc_param["cc_time_before"],
+                                      cc_param["cc_time_before"] +
+                                      cc_param["cc_time_after"])
+            # If any pick has no data, skip this pick pair.
+            if data_files_1 is False or data_files_2 is False:
                 continue
-            elif len(st_1) == 0:
-                msg = "No matching trace found for {pick}"
-                print(msg.format(pick=str(pick_1)))
-                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                continue
-            trace_1 = st_1[0]
-
-            if len(st_2) > 1:
-                msg = "More than one matching trace found for {pick}"
-                print(msg.format(pick=str(pick_1)))
-                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                continue
-            elif len(st_2) == 0:
-                msg = "No matching trace found for {pick}"
-                print(msg.format(pick=str(pick_1)))
-                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                continue
-            trace_2 = st_2[0]
-
-            if trace_1.id != trace_2.id:
-                msg = "Non matching ids during cross correlation. "
-                msg += "(%s and %s)" % (trace_1.id, trace_2.id)
-                print(msg)
-                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                continue
-            if trace_1.stats.sampling_rate != \
-                    trace_2.stats.sampling_rate:
-                msg = ("Non matching sampling rates during cross "
-                       "correlation. ")
-                msg += "(%s and %s)" % (trace_1.id, trace_2.id)
-                print(msg)
-                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                continue
-
-            # Call the cross correlation function.
-            with warnings.catch_warnings():
-                warnings.simplefilter("ignore")
-                try:
-                    pick2_corr, cross_corr_coeff = \
-                        xcorr_pick_correction(
-                            pick_1["pick_time"], trace_1,
-                            pick_2["pick_time"], trace_2,
-                            t_before=cc_param["cc_time_before"],
-                            t_after=cc_param["cc_time_after"],
-                            cc_maxlag=cc_param["cc_maxlag"],
-                            filter="bandpass",
-                            filter_options={
-                                "freqmin":
-                                cc_param["cc_filter_min_freq"],
-                                "freqmax":
-                                cc_param["cc_filter_max_freq"]})
-                    # added by Steve Sewell. Fix bug in xcorrPickCorrection
-                    # that allows pick_corr to be > the maximum lag time
-                    if abs(pick2_corr) > cc_param["cc_maxlag"]:
-                        msg = "Error during cross correlating: "
-                        msg += "Pick correction is greater than maximum lag, "
-                        msg += "Pick 1 - " + pick_1['id'] + ', '
-                        msg += "Pick 2 - " + pick_2['id']
-                        print(msg)
-                        cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
-                        continue
-                except Exception as err:
-                    # XXX: Maybe maxlag is too short?
-                    if not str(err).startswith("Less than 3"):
-                        msg = "Error during cross correlating: "
-                        msg += str(err)
-                        print(msg)
-                        cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+            # Read all files.
+            stream_1 = Stream()
+            stream_2 = Stream()
+            for waveform_file in data_files_1:
+                stream_1 += read(waveform_file, starttime=pick_1["pick_time"]-1, endtime=pick_1["pick_time"]+5)
+            for waveform_file in data_files_2:
+                stream_2 += read(waveform_file, starttime=pick_2["pick_time"]-1, endtime=pick_2["pick_time"]+5)
+            # Get the corresponing pick weighting dictionary.
+            if pick_1_phase == "P":
+                pick_weight_dict = cc_param[
+                    "cc_p_phase_weighting"]
+            elif pick_1_phase == "S":
+                pick_weight_dict = cc_param[
+                    "cc_s_phase_weighting"]
+            all_cross_correlations = []
+            # Loop over all picks and weight them.
+            for (channel, channel_weight) in iteritems(pick_weight_dict):
+                if channel_weight == 0.0:
                     continue
-            all_cross_correlations.append((pick2_corr, cross_corr_coeff,
-                                           channel_weight))
-        if len(all_cross_correlations) == 0:
-            cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = "No cross correlations performed"
-            continue
-        # Now combine all of them based upon their weight.
-        pick2_corr = sum([_i[0] * _i[2] for _i in
-                          all_cross_correlations])
-        cross_corr_coeff = sum([_i[1] * _i[2] for _i in
-                                all_cross_correlations])
-        weight = sum([_i[2] for _i in all_cross_correlations])
-        pick2_corr /= weight
-        cross_corr_coeff /= weight
-        cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = (pick2_corr, cross_corr_coeff)
-        # If the cross_corr_coeff is under the allowed limit, discard it.
-        if cross_corr_coeff < \
-                cc_param["cc_min_allowed_cross_corr_coeff"]:
-            continue
-        # Otherwise calculate the corrected differential travel time.
-        diff_travel_time = ((pick_1["pick_time"] - event_1_dict["origin_time"]) -
-                            (pick_2["pick_time"] + pick2_corr - event_2_dict["origin_time"]))
-            #(pick_2["pick_time"] + pick2_corr -
-            #event_2_dict["origin_time"]) - (pick_1["pick_time"] -
-            #event_1_dict["origin_time"])
-        string = "{station_id} {travel_time:.6f} {weight:.4f} {phase}"
-        string = string.format(
-            station_id=pick_1["station_id"],
-            travel_time=diff_travel_time,
-            weight=cross_corr_coeff,
-            phase=pick_1["phase"])
-        current_pair_strings.append(string)
-    # Write the file.
-    with open(event_pair_file, "w") as open_file:
-        open_file.write("\n".join(current_pair_strings))
+                # Filter the files to obtain the correct trace.
+                network, station = station_id.split(".")
+                st_1 = stream_1.select(network=network, station=station,
+                                       channel="*%s" % channel)
+                st_2 = stream_2.select(network=network, station=station,
+                                       channel="*%s" % channel)
+                max_starttime_st_1 = pick_1["pick_time"] - \
+                    cc_param["cc_time_before"]
+                min_endtime_st_1 = pick_1["pick_time"] + \
+                    cc_param["cc_time_after"]
+                max_starttime_st_2 = pick_2["pick_time"] - \
+                    cc_param["cc_time_before"]
+                min_endtime_st_2 = pick_2["pick_time"] + \
+                    cc_param["cc_time_after"]
+                # Attempt to find the correct trace.
+                for trace in st_1:
+                    if trace.stats.starttime > max_starttime_st_1 or \
+                       trace.stats.endtime < min_endtime_st_1:
+                        st_1.remove(trace)
+                for trace in st_2:
+                    if trace.stats.starttime > max_starttime_st_2 or \
+                       trace.stats.endtime < min_endtime_st_2:
+                        st_2.remove(trace)
+
+                # cleanup merges, in case the event is included in
+                # multiple traces (happens for events with very close
+                # origin times)
+                st_1.merge(-1)
+                st_2.merge(-1)
+
+                if len(st_1) > 1:
+                    msg = "More than one matching trace found for {pick}"
+                    print(msg.format(pick=str(pick_1)))
+                    cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                    continue
+                elif len(st_1) == 0:
+                    msg = "No matching trace found for {pick}"
+                    print(msg.format(pick=str(pick_1)))
+                    cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                    continue
+                trace_1 = st_1[0]
+
+                if len(st_2) > 1:
+                    msg = "More than one matching trace found for {pick}"
+                    print(msg.format(pick=str(pick_1)))
+                    cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                    continue
+                elif len(st_2) == 0:
+                    msg = "No matching trace found for {pick}"
+                    print(msg.format(pick=str(pick_1)))
+                    cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                    continue
+                trace_2 = st_2[0]
+
+                if trace_1.id != trace_2.id:
+                    msg = "Non matching ids during cross correlation. "
+                    msg += "(%s and %s)" % (trace_1.id, trace_2.id)
+                    print(msg)
+                    cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                    continue
+                if trace_1.stats.sampling_rate != \
+                        trace_2.stats.sampling_rate:
+                    msg = ("Non matching sampling rates during cross "
+                           "correlation. ")
+                    msg += "(%s and %s)" % (trace_1.id, trace_2.id)
+                    print(msg)
+                    cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                    continue
+
+                # Call the cross correlation function.
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    try:
+                        pick2_corr, cross_corr_coeff = \
+                            xcorr_pick_correction(
+                                pick_1["pick_time"], trace_1,
+                                pick_2["pick_time"], trace_2,
+                                t_before=cc_param["cc_time_before"],
+                                t_after=cc_param["cc_time_after"],
+                                cc_maxlag=cc_param["cc_maxlag"],
+                                filter="bandpass",
+                                filter_options={
+                                    "freqmin":
+                                    cc_param["cc_filter_min_freq"],
+                                    "freqmax":
+                                    cc_param["cc_filter_max_freq"]})
+                        # added by Steve Sewell. Fix bug in xcorrPickCorrection
+                        # that allows pick_corr to be > the maximum lag time
+                        if abs(pick2_corr) > cc_param["cc_maxlag"]:
+                            msg = "Error during cross correlating: "
+                            msg += "Pick correction is greater than maximum lag, "
+                            msg += "Pick 1 - " + pick_1['id'] + ', '
+                            msg += "Pick 2 - " + pick_2['id']
+                            print(msg)
+                            cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                            continue
+                    except Exception as err:
+                        # XXX: Maybe maxlag is too short?
+                        if not str(err).startswith("Less than 3"):
+                            msg = "Error during cross correlating: "
+                            msg += str(err)
+                            print(msg)
+                            cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
+                        continue
+                all_cross_correlations.append((pick2_corr, cross_corr_coeff,
+                                               channel_weight))
+            if len(all_cross_correlations) == 0:
+                cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = "No cross correlations performed"
+                continue
+            # Now combine all of them based upon their weight.
+            pick2_corr = sum([_i[0] * _i[2] for _i in
+                              all_cross_correlations])
+            cross_corr_coeff = sum([_i[1] * _i[2] for _i in
+                                    all_cross_correlations])
+            weight = sum([_i[2] for _i in all_cross_correlations])
+            pick2_corr /= weight
+            cross_corr_coeff /= weight
+            cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = (pick2_corr, cross_corr_coeff)
+            # If the cross_corr_coeff is under the allowed limit, discard it.
+            if cross_corr_coeff < \
+                    cc_param["cc_min_allowed_cross_corr_coeff"]:
+                continue
+            # Otherwise calculate the corrected differential travel time.
+            diff_travel_time = ((pick_1["pick_time"] - event_1_dict["origin_time"]) -
+                                (pick_2["pick_time"] + pick2_corr - event_2_dict["origin_time"]))
+                #(pick_2["pick_time"] + pick2_corr -
+                #event_2_dict["origin_time"]) - (pick_1["pick_time"] -
+                #event_1_dict["origin_time"])
+            string = "{station_id} {travel_time:.6f} {weight:.4f} {phase}"
+            string = string.format(
+                station_id=pick_1["station_id"],
+                travel_time=diff_travel_time,
+                weight=cross_corr_coeff,
+                phase=pick_1["phase"])
+            current_pair_strings.append(string)
+        # Write the file.
+        with open(event_pair_file, "w") as open_file:
+            open_file.write("\n".join(current_pair_strings))
     return cc_results
 
         
