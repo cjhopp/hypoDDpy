@@ -916,7 +916,7 @@ class HypoDDRelocator(object):
         # with that later
         results = Parallel(n_jobs=ncores)(
                     delayed(cross_correlate_evt_pairs)(
-                        events_info=evt_pair_list,
+                        event_pair_list=evt_pair_list,
                         events=self.events,
                         waveform_information=self.waveform_information,
                         _find_data=_find_data,
