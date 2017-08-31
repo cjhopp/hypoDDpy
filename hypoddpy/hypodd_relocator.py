@@ -1340,9 +1340,9 @@ def cross_correlate_evt_pairs(event_pair_list, events, waveform_information,
             stream_1 = Stream()
             stream_2 = Stream()
             for waveform_file in data_files_1:
-                stream_1 += read(waveform_file, starttime=pick_1["pick_time"]-1, endtime=pick_1["pick_time"]+5)
+                stream_1 += read(waveform_file)
             for waveform_file in data_files_2:
-                stream_2 += read(waveform_file, starttime=pick_2["pick_time"]-1, endtime=pick_2["pick_time"]+5)
+                stream_2 += read(waveform_file)
             # Get the corresponing pick weighting dictionary.
             if pick_1_phase == "P":
                 pick_weight_dict = cc_param[

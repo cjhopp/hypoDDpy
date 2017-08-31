@@ -19,7 +19,7 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/test_12-15'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # working dir
-work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD'
+work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/testing'
 
 # output dir and catalog file
 out_dir = work_dir
