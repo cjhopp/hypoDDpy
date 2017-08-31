@@ -888,8 +888,8 @@ class HypoDDRelocator(object):
 
         :param outfile: Filename of cross correlation results output.
         """
-        ct_file_path = os.path.join(self.paths["input_files"], "dt.cc")
-        if os.path.exists(ct_file_path):
+        cc_file_path = os.path.join(self.paths["input_files"], "dt.cc")
+        if os.path.exists(cc_file_path):
             self.log("dt.cc input file already exists")
             return
         # This is by far the lengthiest operation and will be broken up in
@@ -938,7 +938,7 @@ class HypoDDRelocator(object):
             with open(cc_file, "r") as open_file:
                 final_string.append(open_file.read().strip())
         final_string = "\n".join(final_string)
-        with open(ct_file_path, "w") as open_file:
+        with open(cc_file_path, "w") as open_file:
             open_file.write(final_string)
 
     def _write_hypoDD_inp_file(self):
