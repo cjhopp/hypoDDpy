@@ -306,16 +306,18 @@ class HypoDDRelocator(object):
                             "latitude": blockette.latitude,
                             "longitude": blockette.longitude,
                             "elevation": int(round(blockette.elevation))}
-            # added to handle StationXML format
+            # SS Added to handle StationXML format
+            # CJH Added handling of stationXML containing multiple stations
             except:
                 inv = read_inventory(station_file)
-                station_id = "%s.%s" % ('NZ',
-                                        inv[0][0].code)
-                self.stations[station_id] = {
-                    "latitude": inv[0][0].latitude,
-                    "longitude": inv[0][0].longitude,
-                    "elevation": int(round(inv[0][0].elevation))}
-                            
+                for net in inv:
+                    for sta in net:
+                        station_id = "%s.%s" % (net.code,
+                                                sta.code)
+                        self.stations[station_id] = {
+                            "latitude": sta.latitude,
+                            "longitude": sta.longitude,
+                            "elevation": int(round(sta.elevation))}
         with open(serialized_station_file, "w") as open_file:
             json.dump(self.stations, open_file)
         self.log("Done parsing stations.")
