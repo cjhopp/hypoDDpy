@@ -927,8 +927,9 @@ class HypoDDRelocator(object):
                         for evt_pair_list in event_pair_lists)
         # Now update self.cc_results from all correlation results
         # Does this account for double counting of events??
-        for id1, items in iteritems(results):
-            self.cc_results.setdefault(id1, {}).update(items)
+        for result in results:
+            for id1, items in iteritems(result):
+                self.cc_results.setdefault(id1, {}).update(items)
         time_taken = time.time() - start_time
         print('Cross-correlation took ' + str(time_taken / (60*60)) + ' hours')
         self.log("Finished calculating cross correlations.")
