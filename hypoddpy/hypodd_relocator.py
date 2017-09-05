@@ -913,6 +913,8 @@ class HypoDDRelocator(object):
                for evt_pair in event_id_pairs]
         # Partition evt pairs into ncores chunks? Must be a better option
         event_pair_lists = [evs[i::ncores] for i in range(ncores)]
+        print('There are %d lists of event pairs' % len(event_pair_lists))
+        print('Starting parallel processes')
         # Create pool workers and pass them event pair lists.
         # This will run each event pair twice...so we'll deal
         # with that later
