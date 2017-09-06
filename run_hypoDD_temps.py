@@ -2,7 +2,7 @@
 
 """ This program runs hypoDDpy."""
 
-import glob
+from glob import glob
 import csv
 import os
 
