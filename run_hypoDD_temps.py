@@ -180,7 +180,7 @@ for self in selfs:
 print('Adding wavs to relocator object')
 relocator.add_waveform_files(data_file_list)
 print('Adding station files to relocator object')
-relocator.add_station_files(glob.glob(sta_file))
+relocator.add_station_files(glob(sta_file))
 print('Starting relocation run')
 # Start the relocation with the desired output file.
 relocator.start_relocation(output_event_file=os.path.join(out_dir, out_file),
