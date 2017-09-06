@@ -909,8 +909,19 @@ class HypoDDRelocator(object):
         start_time = time.time()
         # Create list of all kwargs for correlation function
         evs = [(evt_pair, {'event_1_id': self.event_map[evt_pair[0]],
-                           'event_2_id': self.event_map[evt_pair[1]]})
+                           'event_2_id': self.event_map[evt_pair[1]],
+                           'event_1_dict': None,
+                           'event_2_dict': None})
                for evt_pair in event_id_pairs]
+        for ev in evs:
+            for event in self.events:
+                if event["event_id"] == ev[1]['event_1_id']:
+                    ev[1]['event_1_dict'] = event
+                if event["event_id"] == ev[1]['event_2_id']:
+                    ev[1]['event_2_dict'] = event
+                if ev[1]['event_1_dict'] is not None \
+                    and ev[1]['event_2_dict'] is not None:
+                    break
         # Partition evt pairs into ncores chunks? Must be a better option
         event_pair_lists = [evs[i::ncores] for i in range(ncores)]
         print('There are %d lists of event pairs' % len(event_pair_lists))
@@ -1271,7 +1282,7 @@ def _find_data(waveform_information, station_id, starttime, duration):
         return False
     return list(set(filenames))
 
-def cross_correlate_evt_pairs(event_pair_list, events, waveform_information,
+def cross_correlate_evt_pairs(event_pair_list, waveform_information,
                               _find_data, cc_param, cc_dir):
     cc_results = {}
     for evt_pair_tup in event_pair_list:
@@ -1285,15 +1296,9 @@ def cross_correlate_evt_pairs(event_pair_list, events, waveform_information,
         # Find the corresponding events.
         event_id_1 = evt_pair_tup[1]['event_1_id']
         event_id_2 = evt_pair_tup[1]['event_2_id']
+        event_1_dict = evt_pair_tup[1]['event_1_dict']
+        event_2_dict = evt_pair_tup[1]['event_2_dict']
         print('Event pair is ' + event_id_1 + ' : ' + event_id_2)
-        event_1_dict = event_2_dict = None
-        for event in events:
-            if event["event_id"] == event_id_1:
-                event_1_dict = event
-            if event["event_id"] == event_id_2:
-                event_2_dict = event
-            if event_1_dict is not None and event_2_dict is not None:
-                break
         # Some safety measures to ensure the script keeps running even if
         # something unexpected happens.
         if event_1_dict is None:
