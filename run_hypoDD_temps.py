@@ -3,6 +3,7 @@
 """ This program runs hypoDDpy."""
 
 import glob
+import csv
 import os
 
 from hypoddpy.hypodd_relocator import HypoDDRelocator
@@ -160,11 +161,22 @@ relocator.setup_velocity_model(
 # Add the necessary files. Call a function multiple times if necessary.
 print('Adding event files to relocator object')
 relocator.add_event_files(cat_file)
-print('Crawling wav directories')
+print('Creating list of all self_detection wav directories.')
+self_files = [
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/selfs_rotnga_2012.txt',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/selfs_rotnga_2013.txt',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/selfs_rotnga_2014.txt',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/selfs_rotnga_2015.txt']
+selfs = []
+for self_file in self_files:
+    with open(self_file, 'r') as f:
+        rdr = csv.reader(f)
+        for row in rdr:
+            selfs.append(str(row[0]))
 data_file_list = []
-for root, dirs, files in os.walk(wav_dir):
-    for file in files:
-        data_file_list.append(os.path.join(root, file))
+for self in selfs:
+    print('Adding %s to file list' % os.path.join(wav_dir, self, '*'))
+    data_file_list.extend(glob(os.path.join(wav_dir, self, '*')))
 print('Adding wavs to relocator object')
 relocator.add_waveform_files(data_file_list)
 print('Adding station files to relocator object')
