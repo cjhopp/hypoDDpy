@@ -913,6 +913,7 @@ class HypoDDRelocator(object):
                            'event_1_dict': None,
                            'event_2_dict': None})
                for evt_pair in event_id_pairs]
+        print('Populating event dict before parallel run.')
         for ev in evs:
             for event in self.events:
                 if event["event_id"] == ev[1]['event_1_id']:
