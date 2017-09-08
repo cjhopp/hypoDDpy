@@ -27,7 +27,7 @@ out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
-ncores = 25
+ncores = 50
 
 ### ph2dt Settings
 ph2dt_sets = {
