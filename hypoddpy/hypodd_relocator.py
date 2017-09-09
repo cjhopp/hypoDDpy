@@ -645,12 +645,12 @@ class HypoDDRelocator(object):
             compiler = HypoDDCompiler(working_dir=self.working_dir,
                                       log_function=logfunc)
             compiler.configure(MAXEVE=len(self.events) + 30,
-                               #MAXEVE0=len(self.events) + 30,
-                               MAXEVE0=1,
-                               MAXDATA=5000000,
+                               MAXEVE0=2,
+                               MAXDATA=11000000,
                                MAXDATA0=1,
-                               MAXCL=2,
-                               MAXSTA=len(self.stations) + 10)
+                               MAXLAY=12,
+                               MAXCL=1,
+                               MAXSTA=len(self.stations) + 1)
             compiler.make()
 
     def _run_hypodd(self):
