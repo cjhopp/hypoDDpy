@@ -117,7 +117,7 @@ class HypoDDCompiler(object):
             "hypoDD.inc")
 
     def configure(self, MAXEVE=3000, MAXDATA=2800000, MAXEVE0=50,
-        MAXDATA0=60000, MAXLAY=30, MAXSTA=2000, MAXCL=200):
+        MAXDATA0=60000, MAXLAY=30, MAXSTA=50, MAXCL=2):
         """
         Configure the compilation.
 
