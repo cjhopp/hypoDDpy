@@ -1113,7 +1113,7 @@ class HypoDDRelocator(object):
                 lat, lon, depth = map(float, [lat, lon, depth])
                 # Convert back to meters.
                 depth *= 1000.0
-                event = res_id.getReferredObject()
+                event = res_id.get_referred_object()
                 # Create new origin.
                 new_origin = Origin()
                 sec = int(float(second))

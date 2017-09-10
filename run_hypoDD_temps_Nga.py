@@ -44,13 +44,13 @@ ph2dt_sets = {
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 1000,
     # Minimum number of links required to define a neighbour
-    'MINLNK' : 8,
+    'MINLNK' : 6,
     # Minimum number of links per pair 
     'MINOBS' : 1,
     # Max number of links per pair. 
     # Should set to total number of stations to consider all phase pairs 
     # within geographic cluster
-    'MAXOBS' : 40
+    'MAXOBS' : 45
             }
 
 ### HypoDD Settings
@@ -85,11 +85,11 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   20",
-               "   5  0.01  0.01 -999 -999   1.0 0.005 -999    4   20",
-               "   5  1.00  0.01 -999    2  0.01 0.005 -999    4   20",
-               "   5  1.00  0.01 -999    2  0.01 0.005 -999    4   20",
-               "   5  1.00  0.01 -999  0.5  0.01 0.005 -999    4   20"]
+    'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   80",
+               "   5  0.01  0.01 -999 -999   1.0 0.005 -999    4   80",
+               "   5  1.00  0.01 -999    4  0.01 0.005 -999    4   80",
+               "   5  1.00  0.01 -999    3  0.01 0.005 -999    4   80",
+               "   5  1.00  0.01 -999    1  0.01 0.005 -999    4   80"]
             }
 
 ### Cross-correlation Plotting
