@@ -73,7 +73,7 @@ hypodd_sets = {
     # Set to -999 to disable
     'MAXGAP' : -999,
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
-    'ISTART' : 2,
+    'ISTART' : 1,
     # Iterations
     # List each iteration as a string in following order... 
     # NITER = number of iterations for this set of parameters
