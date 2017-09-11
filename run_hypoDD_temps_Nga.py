@@ -27,7 +27,7 @@ out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
-ncores = 50
+ncores = 30
 
 ### ph2dt Settings
 ph2dt_sets = {
@@ -39,14 +39,14 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 10, 
+    'MAXSEP' : 5,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 1000,
     # Minimum number of links required to define a neighbour
     'MINLNK' : 6,
     # Minimum number of links per pair 
-    'MINOBS' : 1,
+    'MINOBS' : 4,
     # Max number of links per pair. 
     # Should set to total number of stations to consider all phase pairs 
     # within geographic cluster
@@ -85,10 +85,10 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   200",
-               "   5  0.01  0.01 -999 -999   1.0 0.005 -999    4   200",
-               "   5  0.50  0.01 -999    4  0.50 0.005 -999    4   200",
-               "   5  0.70  0.01 -999    3  0.30 0.005 -999    4   200",
+    'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005  1.0 -999   200",
+               "   5  0.01  0.01 -999 -999   1.0 0.005  0.5    4   200",
+               "   5  0.50  0.01 -999    4  0.50 0.005  0.5    4   200",
+               "   5  0.70  0.01 -999    3  0.30 0.005  0.3    4   200",
                "   5  1.00  0.01 -999    3  0.01 0.005 -999    4   200"]
             }
 
