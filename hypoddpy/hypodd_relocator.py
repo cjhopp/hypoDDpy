@@ -905,6 +905,7 @@ class HypoDDRelocator(object):
         if not os.path.exists(dt_ct_path):
             msg = "dt.ct does not exists. Did ph2dt run successfully?"
             raise HypoDDException(msg)
+        cat_len = len(self.events) # For print purposes in parallel only
         event_id_pairs = self.get_event_id_pairs(cc_dir, dt_ct_path)
         start_time = time.time()
         # Create list of all kwargs for correlation function
@@ -936,7 +937,8 @@ class HypoDDRelocator(object):
                         waveform_information=self.waveform_information,
                         _find_data=_find_data,
                         cc_param=self.cc_param,
-                        cc_dir=cc_dir)
+                        cc_dir=cc_dir,
+                        cat_len=cat_len)
                         for evt_pair_list in event_pair_lists)
         # Now update self.cc_results from all correlation results
         # Does this account for double counting of events??
@@ -1283,7 +1285,7 @@ def _find_data(waveform_information, station_id, starttime, duration):
     return list(set(filenames))
 
 def cross_correlate_evt_pairs(event_pair_list, waveform_information,
-                              _find_data, cc_param, cc_dir):
+                              _find_data, cc_param, cc_dir, cat_len):
     cc_results = {}
     for evt_pair_tup in event_pair_list:
         event_1, event_2 = evt_pair_tup[0]
@@ -1298,7 +1300,7 @@ def cross_correlate_evt_pairs(event_pair_list, waveform_information,
         event_id_2 = evt_pair_tup[1]['event_2_id']
         event_1_dict = evt_pair_tup[1]['event_1_dict']
         event_2_dict = evt_pair_tup[1]['event_2_dict']
-        print('Event pair is ' + event_id_1 + ' : ' + event_id_2)
+        print('HypoDD id {!s} of {!s}'.format(event_1, cat_len))
         # Some safety measures to ensure the script keeps running even if
         # something unexpected happens.
         if event_1_dict is None:
