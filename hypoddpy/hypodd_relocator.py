@@ -66,10 +66,6 @@ class HypoDDRelocator(object):
         if not os.path.exists(working_dir):
             os.makedirs(working_dir)
 
-        self.cc_plot_dir = cc_plot_dir
-        if not os.path.exists(cc_plot_dir):
-            os.makedirs(cc_plot_dir)
-
         # Some sanity checks.
         if cc_filter_min_freq >= cc_filter_max_freq:
             msg = "cc_filter_min_freq has to smaller then cc_filter_max_freq."
@@ -94,7 +90,7 @@ class HypoDDRelocator(object):
             "cc_p_phase_weighting": cc_p_phase_weighting,
             "cc_s_phase_weighting": cc_s_phase_weighting,
             "cc_min_allowed_cross_corr_coeff": cc_min_allowed_cross_corr_coeff,
-            "cc_plot_int" : cc_plot_int}
+            }
 	
         # dictionaries containing parameters to use in ph2dt and hypodd runs
         self.ph2dt_sets = ph2dt_sets
@@ -899,7 +895,6 @@ class HypoDDRelocator(object):
         cc_dir = os.path.join(self.paths["working_files"], "cc_files")
         if not os.path.exists(cc_dir):
             os.makedirs(cc_dir)
-        cc_plot_dir = self.cc_plot_dir
         # Read the dt.ct file and get all event pairs.
         dt_ct_path = os.path.join(self.paths["input_files"], "dt.ct")
         if not os.path.exists(dt_ct_path):
