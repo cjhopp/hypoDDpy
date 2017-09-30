@@ -456,7 +456,7 @@ class HypoDDRelocator(object):
             self.events.append(current_event)
             current_event["event_id"] = str(event.resource_id)
             # Take the value from the first event.
-            if len(ev.magnitudes) > 0:
+            if len(event.magnitudes) > 0:
                 current_event["magnitude"] = event.magnitudes[0].mag
             # Always take the first origin.
             origin = event.origins[0]
