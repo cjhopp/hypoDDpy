@@ -32,7 +32,7 @@ class HypoDDRelocator(object):
     def __init__(self, working_dir, cc_time_before, cc_time_after, cc_maxlag,
                  cc_filter_min_freq, cc_filter_max_freq, cc_p_phase_weighting,
                  cc_s_phase_weighting, cc_min_allowed_cross_corr_coeff,
-		         ph2dt_sets, hypodd_sets, cc_plot_int, cc_plot_dir):
+		         ph2dt_sets, hypodd_sets):
         """
         :param working_dir: The working directory where all temporary and final
             files will be placed.
