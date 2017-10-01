@@ -458,6 +458,8 @@ class HypoDDRelocator(object):
             # Take the value from the first event.
             if len(event.magnitudes) > 0:
                 current_event["magnitude"] = event.magnitudes[0].mag
+            else:
+                current_event["magnitude"] = -999.
             # Always take the first origin.
             origin = event.origins[0]
             current_event["origin_time"] = origin.time
