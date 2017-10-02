@@ -1144,6 +1144,8 @@ class HypoDDRelocator(object):
         """
         Creates some plots of the relocated event Catalog.
         """
+        import matplotlib
+        matplotlib.use('Agg')
         import matplotlib.pyplot as plt
         from matplotlib.cm import get_cmap
         from matplotlib.colors import ColorConverter
