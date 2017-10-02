@@ -44,7 +44,7 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/all_MF_dets'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # number of cores for parallel cross-correlation processing
-ncores = 30
+ncores = 20
 
 ### ph2dt Settings
 ph2dt_sets = {
