@@ -1188,7 +1188,8 @@ class HypoDDRelocator(object):
             relocated_latitudes.append(event.origins[-1].latitude)
             relocated_longitudes.append(event.origins[-1].longitude)
             relocated_depths.append(event.origins[-1].depth / 1000.0)
-            magnitudes.append(event.magnitudes[0])
+            if len(event.magnitudes) > 0:
+                magnitudes.append(event.magnitudes[0])
             # Use color to Code the different events. Colorcode by event
             # cluster or indicate if an event did not get relocated.
             if event.origins[-1].method_id is None or \
