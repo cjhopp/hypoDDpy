@@ -13,10 +13,10 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 cat_files_S = [
     '/Volumes/GeoPhysics_07/users-data/hoppche/catalogs/qml/year_long/hypoDD/det_cat_mcc0.5_shift0.2_NGAS_HypoDD_cc0.7.xml',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012e_LOCATED_justlocs_uncert0.05.xml',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012f_LOCATED_justlocs_uncert0.05.xml',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013a_LOCATED_justlocs_uncert0.05.xml',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013b_LOCATED_justlocs_uncert0.05.xml',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012e_LOCATED_justlocs_uncert0.05.xml',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012f_LOCATED_justlocs_uncert0.05.xml',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013a_LOCATED_justlocs_uncert0.05.xml',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013b_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013c_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013d_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013e_LOCATED_justlocs_uncert0.05.xml',
@@ -35,10 +35,10 @@ cat_files_S = [
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015f_LOCATED_justlocs_uncert0.05.xml',
     ]
 out_dirs_S = [
-    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2012e',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2012f',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013a',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013b',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2012e',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2012f',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013a',
+    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013b',
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013c',
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013d',
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013e',
