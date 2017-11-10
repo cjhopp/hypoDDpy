@@ -645,7 +645,7 @@ class HypoDDRelocator(object):
                                       log_function=logfunc)
             compiler.configure(MAXEVE=len(self.events) + 30,
                                MAXEVE0=2,
-                               MAXDATA=11000000,
+                               MAXDATA=20000000,
                                MAXDATA0=1,
                                MAXLAY=12,
                                MAXCL=1,
