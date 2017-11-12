@@ -214,6 +214,8 @@ for f_list, outdirs in zip([cat_files_S],
             print('Adding template: %s to file list' % os.path.join(wav_dir,
                                                                     self, '*'))
             data_file_list.extend(glob(os.path.join(wav_dir, self, '*')))
+            print('Length of waveforms list after temps: {}'.format(
+                len(data_file_list)))
         print('Finding only event wavs in catalog')
         print('Reading catalog...')
         cat = read_events(cat_file)
@@ -222,6 +224,8 @@ for f_list, outdirs in zip([cat_files_S],
             print('Adding detection: %s to file list' % os.path.join(wav_dir,
                                                                      name, '*'))
             data_file_list.extend(glob(os.path.join(wav_dir, name, '*')))
+        print('Length of waveforms list after dets: {}'.format(
+            len(data_file_list)))
         print('Adding wavs to relocator object')
         relocator.add_waveform_files(data_file_list)
         print('Adding station files to relocator object')
