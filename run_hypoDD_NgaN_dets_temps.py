@@ -148,8 +148,7 @@ cc_plot_int = 0
         cross-correlation coefficient for a differential travel time to be
         accepted.
     """
-for f_list, outdirs in zip([cat_files_N, cat_files_S],
-                           [out_dirs_N, out_dirs_S]):
+for f_list, outdirs in zip(cat_files_N, out_dirs_N):
     for cat_file, outdir in zip(f_list[1:], outdirs):
         print('Running file {}'.format(cat_file))
         relocator = HypoDDRelocator(
