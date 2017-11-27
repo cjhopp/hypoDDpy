@@ -6,6 +6,7 @@ from glob import glob
 from obspy import read_events
 import csv
 import os
+import gc
 
 from hypoddpy.hypodd_relocator import HypoDDRelocator
 
