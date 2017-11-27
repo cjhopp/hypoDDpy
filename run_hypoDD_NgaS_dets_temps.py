@@ -219,6 +219,8 @@ for f_list, outdirs in zip([cat_files_S],
         print('Reading catalog...')
         cat = read_events(cat_file)
         names = [str(ev.resource_id).split('/')[-1] for ev in cat]
+        del cat
+        gc.collect()
         for name in names:
             print('Adding detection: %s to file list' % os.path.join(wav_dir,
                                                                      name, '*'))
