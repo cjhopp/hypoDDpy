@@ -20,22 +20,22 @@ cat_files_S = [
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012f_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013a_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013b_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013c_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013d_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013e_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013f_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014a_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014b_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014c_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014d_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014e_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014f_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015a_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015b_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015c_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015d_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015e_LOCATED_justlocs_uncert0.05.xml',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015f_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013c_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013d_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013e_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2013f_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014a_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014b_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014c_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014d_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014e_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2014f_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015a_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015b_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015c_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015d_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015e_LOCATED_justlocs_uncert0.05.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2015f_LOCATED_justlocs_uncert0.05.xml',
     ]
 out_dirs_S = [
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2012a',
@@ -44,22 +44,22 @@ out_dirs_S = [
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2012f',
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013a',
     '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013b',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013c',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013d',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013e',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013f',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014a',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014b',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014c',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014d',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014e',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014f',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015a',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015b',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015c',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015d',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015e',
-    # '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015f',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013c',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013d',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013e',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2013f',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014a',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014b',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014c',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014d',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014e',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2014f',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015a',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015b',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015c',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015d',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015e',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_NgaS_2015f',
     ]
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/all_MF_dets'
@@ -80,16 +80,16 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 10, 
+    'MAXSEP' : 2,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 1000,
     # Minimum number of links required to define a neighbour
     'MINLNK' : 6,
-    # Minimum number of links per pair 
+    # Minimum number of links per pair
     'MINOBS' : 1,
-    # Max number of links per pair. 
-    # Should set to total number of stations to consider all phase pairs 
+    # Max number of links per pair.
+    # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
     'MAXOBS' : 45
             }
@@ -116,21 +116,21 @@ hypodd_sets = {
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
     'ISTART' : 2,
     # Iterations
-    # List each iteration as a string in following order... 
+    # List each iteration as a string in following order...
     # NITER = number of iterations for this set of parameters
     # WTCCP, WTCCS = Weight for cross-corr (P then S) -999 to not use this data
     # WTCTP, WTCTS = Weight for catalog (P then S) -999 to not use this data
-    # WRCC, WRCT = Cutoffs to remove outliers (cross-corr then cat). 
+    # WRCC, WRCT = Cutoffs to remove outliers (cross-corr then cat).
         # 0-1 = static (number of secs) >=1 = dynamic, multiple of standard dev
     # WDCC, WDCT = Max event separation distance (cross-corr then cat) -999 to deactivate
     # DAMP = damping. Aim for condition numbers between about 40-80
-                    #   Cross-corr Data   #    Catalog Data    #  
-             # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   250",
-               "   5  0.30  0.01 -999    4   0.7 0.005    3    4   220",
-               "   5  0.50  0.01 -999    4  0.50 0.005    3    4   170",
-               "   5  0.70  0.01 -999    3  0.30 0.005    3    3   150",
-               "   5  1.00  0.01 -999    3  0.01 0.005    3    3   150"]
+                    #   Cross-corr Data   #    Catalog Data    #
+             # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP
+    'iters' : ["   5  0.30  -999    2    1   0.7  -999    2    1   150",
+               "   5  0.30  -999    2    1   0.7  -999    2    1   150",
+               "   5  0.50  -999    2    1  0.50  -999    2    1   100",
+               "   5  0.70  -999    2  0.5  0.30  -999    2  0.5    50",
+               "   5  1.00  -999    2  0.25 0.01  -999    2  0.5    50"]
             }
 
 ### Cross-correlation Plotting
