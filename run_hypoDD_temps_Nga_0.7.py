@@ -73,7 +73,7 @@ hypodd_sets = {
     # Set to -999 to disable
     'MAXGAP' : -999,
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
-    'ISTART' : 1,
+    'ISTART' : 2,
     # Iterations
     # List each iteration as a string in following order... 
     # NITER = number of iterations for this set of parameters
@@ -86,9 +86,9 @@ hypodd_sets = {
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
     'iters' : ["   5  0.01  0.01 -999    3   1.0 0.005 -999    3   250",
-               "   5  0.30  0.01 -999    3   0.7 0.005    2    3   220",
-               "   5  0.50  0.01    2    3  0.50 0.005    1    3   170",
-               "   5  0.70  0.01    2    2  0.30 0.005    0.5  2   100",
+               "   5  0.30  0.01    2    3   0.7 0.005    2    3   220",
+               "   5  0.50  0.01    2    3  0.50 0.005    2    3   170",
+               "   5  0.70  0.01    2    2  0.30 0.005    1    2   100",
                "   5  1.00  0.01    2    2  0.01 0.005    0.5  2   100"]
             }
 
