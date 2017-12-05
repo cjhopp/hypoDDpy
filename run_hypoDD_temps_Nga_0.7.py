@@ -27,7 +27,7 @@ out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD_cc0.7.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
-ncores = 30
+ncores = 5
 
 ### ph2dt Settings
 ph2dt_sets = {
@@ -86,16 +86,13 @@ hypodd_sets = {
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
     'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   250",
-               "   5  0.30  0.01 -999    4   0.7 0.005    3    4   220",
-               "   5  0.50  0.01 -999    4  0.50 0.005    3    4   170",
-               "   5  0.70  0.01 -999    3  0.30 0.005    3    3   150",
-               "   5  1.00  0.01 -999    3  0.01 0.005    3    3   150"]
+               "   5  0.30  0.01 -999    4   0.7 0.005    2    4   220",
+               "   5  0.50  0.01    2    3  0.50 0.005    1    3   170",
+               "   5  0.70  0.01    2    2  0.30 0.005    0.5  2   150",
+               "   5  1.00  0.01    1    1  0.01 0.005    0.3  1   150"]
             }
 
 ### Cross-correlation Plotting
-# Event pair interval to output plots of cross-correlations (use 0 to turn off)
-cc_plot_int = 0
-
 
 """ 
     Relocator parameters
@@ -139,9 +136,7 @@ relocator = HypoDDRelocator(
     cc_s_phase_weighting= {},
     cc_min_allowed_cross_corr_coeff=0.7,
     ph2dt_sets=ph2dt_sets, 
-    hypodd_sets=hypodd_sets,
-    cc_plot_int=cc_plot_int,
-    cc_plot_dir=cc_plot_dir)
+    hypodd_sets=hypodd_sets)
 
 # Setup the velocity model. This is just a constant velocity model.
 relocator.setup_velocity_model(
