@@ -63,8 +63,8 @@ hypodd_sets = {
     'DIST' : 50,
     # Minimum number of x-corr or catalog links per event pair to form a continuous cluster
     # Set to 0 to disable clustering within hypoDD
-    'OBSCC' : 0,
-    'OBSCT' : 0,
+    'OBSCC' : 3,
+    'OBSCT' : 4,
     #  min and max distance between event pairs and stations
     # Set to -999 to disable
     'MINDS' : -999,
@@ -88,8 +88,8 @@ hypodd_sets = {
     'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   250",
                "   5  0.30  0.01 -999    4   0.7 0.005    2    4   220",
                "   5  0.50  0.01    2    3  0.50 0.005    1    3   170",
-               "   5  0.70  0.01    2    2  0.30 0.005    0.5  2   150",
-               "   5  1.00  0.01    1    1  0.01 0.005    0.3  1   150"]
+               "   5  0.70  0.01    2    2  0.30 0.005    0.5  2   100",
+               "   5  1.00  0.01    2    2  0.01 0.005    0.5  2   100"]
             }
 
 ### Cross-correlation Plotting
