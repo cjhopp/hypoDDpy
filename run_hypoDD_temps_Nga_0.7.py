@@ -39,7 +39,7 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 10, 
+    'MAXSEP' : 3,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 1000,
@@ -63,8 +63,8 @@ hypodd_sets = {
     'DIST' : 50,
     # Minimum number of x-corr or catalog links per event pair to form a continuous cluster
     # Set to 0 to disable clustering within hypoDD
-    'OBSCC' : 6,
-    'OBSCT' : 8,
+    'OBSCC' : 0,
+    'OBSCT' : 0,
     #  min and max distance between event pairs and stations
     # Set to -999 to disable
     'MINDS' : -999,
@@ -85,8 +85,8 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.01  0.01 -999 -999   1.0 0.005 -999 -999   250",
-               "   5  0.30  0.01 -999    4   0.7 0.005    2    4   220",
+    'iters' : ["   5  0.01  0.01 -999    3   1.0 0.005 -999    3   250",
+               "   5  0.30  0.01 -999    3   0.7 0.005    2    3   220",
                "   5  0.50  0.01    2    3  0.50 0.005    1    3   170",
                "   5  0.70  0.01    2    2  0.30 0.005    0.5  2   100",
                "   5  1.00  0.01    2    2  0.01 0.005    0.5  2   100"]
