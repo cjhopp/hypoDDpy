@@ -63,8 +63,8 @@ hypodd_sets = {
     'DIST' : 50,
     # Minimum number of x-corr or catalog links per event pair to form a continuous cluster
     # Set to 0 to disable clustering within hypoDD
-    'OBSCC' : 3,
-    'OBSCT' : 4,
+    'OBSCC' : 6,
+    'OBSCT' : 8,
     #  min and max distance between event pairs and stations
     # Set to -999 to disable
     'MINDS' : -999,
