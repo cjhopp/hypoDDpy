@@ -648,7 +648,7 @@ class HypoDDRelocator(object):
                                MAXDATA=12000000,
                                MAXDATA0=1,
                                MAXLAY=12,
-                               MAXCL=1,
+                               MAXCL=10,
                                MAXSTA=len(self.stations) + 1)
             compiler.make()
 
