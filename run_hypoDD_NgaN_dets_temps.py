@@ -13,7 +13,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 cat_files_N = [
-    '/Volumes/GeoPhysics_07/users-data/hoppche/catalogs/qml/year_long/hypoDD/det_cat_mcc0.5_shift0.2_NGAN_HypoDD_cc0.7.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/catalogs/qml/year_long/hypoDD/det_cat_mcc0.5_shift0.2_NGAN_HypoDD_cc0.7_newlocs.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaN/det_cat_mcc0.4_shift0.2_NgaN_2012a_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaN/det_cat_mcc0.4_shift0.2_NgaN_2012b_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaN/det_cat_mcc0.4_shift0.2_NgaN_2012c_LOCATED_justlocs_uncert0.05.xml',

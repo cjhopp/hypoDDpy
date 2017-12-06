@@ -13,7 +13,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 cat_files_S = [
-    '/Volumes/GeoPhysics_07/users-data/hoppche/catalogs/qml/year_long/hypoDD/det_cat_mcc0.5_shift0.2_NGAS_HypoDD_cc0.7.xml',
+    '/Volumes/GeoPhysics_07/users-data/hoppche/catalogs/qml/year_long/hypoDD/det_cat_mcc0.5_shift0.2_NGAS_HypoDD_cc0.7_newlocs.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012a_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012b_LOCATED_justlocs_uncert0.05.xml',
     '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/location_cats/NgaS/det_cat_mcc0.4_shift0.2_NgaS_2012e_LOCATED_justlocs_uncert0.05.xml',
@@ -130,7 +130,7 @@ hypodd_sets = {
                "   5  0.30  -999    2    1   0.7  -999    2    1   100",
                "   5  0.50  -999    2    1  0.50  -999    2    1    70",
                "   5  0.70  -999    2  0.5  0.30  -999    2  0.5    50",
-               "   5  1.00  -999    2  0.25 0.01  -999    2  0.5    30"]
+               "   5  1.00  -999    2  0.5  0.01  -999    2  0.5    30"]
             }
 
 ### Cross-correlation Plotting
