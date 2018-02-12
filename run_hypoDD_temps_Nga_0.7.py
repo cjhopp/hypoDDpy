@@ -10,7 +10,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
-cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Nga_ALL_final.xml'
+cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Nga_ALL_final_stefan_Spicks_slocs.xml'
 
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/all_MF_dets'
@@ -19,15 +19,15 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/all_MF_dets'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # working dir
-work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Nga_7'
+work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Nga_7_Spicks'
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD_cc0.7.xml'
+out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD_cc0.7_Spicks.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
-ncores = 5
+ncores = 15
 
 ### ph2dt Settings
 ph2dt_sets = {
@@ -58,7 +58,7 @@ hypodd_sets = {
     # 1 = cross-corr only, 2 = absolute (cat) data only, 3 = cross-corr and catalog
     'IDAT' : 3,
     # 1 = P-phase, 2 = S-phase, 3 = P & S phase
-    'IPHASE' : 1,
+    'IPHASE' : 3,
     # Maximum distance between centroid of event cluster and stations
     'DIST' : 50,
     # Minimum number of x-corr or catalog links per event pair to form a continuous cluster
@@ -85,11 +85,11 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.30  -999    2    1   0.7  -999    2    1   150",
-               "   5  0.30  -999    2    1   0.7  -999    2    1   150",
-               "   5  0.50  -999    2    1  0.50  -999    2    1   100",
-               "   5  0.70  -999    2  0.5  0.30  -999    2  0.5    50",
-               "   5  1.00  -999    2  0.25 0.01  -999    2  0.5    50"]
+    'iters' : ["   5  0.30  0.30    2    1   0.7   0.7    2    1   150",
+               "   5  0.30  0.30    2    1   0.7   0.7    2    1   150",
+               "   5  0.50  0.50    2    1  0.50   0.5    2    1   100",
+               "   5  0.70  0.70    2  0.5  0.30   0.3    2  0.5    50",
+               "   5  1.00  1.00    2  0.25 0.01  0.01    2  0.25   50"]
             }
 
 ### Cross-correlation Plotting
@@ -133,7 +133,7 @@ relocator = HypoDDRelocator(
     cc_filter_min_freq=3.0,
     cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
-    cc_s_phase_weighting= {},
+    cc_s_phase_weighting= {"E": 1.0, "N": 1.0, "1": 1.0, "2": 1.0},
     cc_min_allowed_cross_corr_coeff=0.7,
     ph2dt_sets=ph2dt_sets, 
     hypodd_sets=hypodd_sets)
