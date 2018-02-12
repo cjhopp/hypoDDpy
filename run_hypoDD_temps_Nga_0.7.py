@@ -13,7 +13,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Nga_ALL_final_stefan_Spicks_slocs.xml'
 
 # time slice directory
-wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/all_MF_dets'
+wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
 
 # station files dir
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
