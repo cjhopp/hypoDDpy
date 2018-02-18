@@ -3,31 +3,27 @@
 """ This program runs hypoDDpy."""
 
 from glob import glob
+from obspy import read_events
 import csv
 import os
+import gc
 
 from hypoddpy.hypodd_relocator import HypoDDRelocator
 
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
-cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Nga_ALL_final_stefan_Spicks_slocs.xml'
-
+cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/Catalog_Nga_ALL_final_mags_spicks_located.xml'
+out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_Nga'
+out_file = 'Catalog_Nga_ALL_dets_mags_cc7_spicks.xml'
+work_dir = out_dir
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
 
 # station files dir
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
-# working dir
-work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Nga_7_Spicks'
-
-# output dir and catalog file
-out_dir = work_dir
-out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD_cc0.7_Spicks.xml'
-cc_plot_dir = out_dir + '/cc_plots/'
-
 # number of cores for parallel cross-correlation processing
-ncores = 15
+ncores = 20
 
 ### ph2dt Settings
 ph2dt_sets = {
@@ -45,10 +41,10 @@ ph2dt_sets = {
     'MAXNGH' : 1000,
     # Minimum number of links required to define a neighbour
     'MINLNK' : 6,
-    # Minimum number of links per pair 
+    # Minimum number of links per pair
     'MINOBS' : 1,
-    # Max number of links per pair. 
-    # Should set to total number of stations to consider all phase pairs 
+    # Max number of links per pair.
+    # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
     'MAXOBS' : 45
             }
@@ -75,16 +71,16 @@ hypodd_sets = {
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
     'ISTART' : 2,
     # Iterations
-    # List each iteration as a string in following order... 
+    # List each iteration as a string in following order...
     # NITER = number of iterations for this set of parameters
     # WTCCP, WTCCS = Weight for cross-corr (P then S) -999 to not use this data
     # WTCTP, WTCTS = Weight for catalog (P then S) -999 to not use this data
-    # WRCC, WRCT = Cutoffs to remove outliers (cross-corr then cat). 
+    # WRCC, WRCT = Cutoffs to remove outliers (cross-corr then cat).
         # 0-1 = static (number of secs) >=1 = dynamic, multiple of standard dev
     # WDCC, WDCT = Max event separation distance (cross-corr then cat) -999 to deactivate
     # DAMP = damping. Aim for condition numbers between about 40-80
-                    #   Cross-corr Data   #    Catalog Data    #  
-             # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
+                    #   Cross-corr Data   #    Catalog Data    #
+             # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP
     'iters' : ["   5  0.30  0.15    2    1   0.7   0.35    2    1   150",
                "   5  0.30  0.15    2    1   0.7   0.35    2    1   150",
                "   5  0.50  0.25    2    1  0.50   0.25    2    1   100",
@@ -93,6 +89,9 @@ hypodd_sets = {
             }
 
 ### Cross-correlation Plotting
+# Event pair interval to output plots of cross-correlations (use 0 to turn off)
+cc_plot_int = 0
+
 
 """ 
     Relocator parameters
@@ -124,7 +123,6 @@ hypodd_sets = {
         cross-correlation coefficient for a differential travel time to be
         accepted.
     """
-
 relocator = HypoDDRelocator(
     working_dir=work_dir,
     cc_time_before=0.1,
@@ -135,7 +133,7 @@ relocator = HypoDDRelocator(
     cc_p_phase_weighting={"Z": 1.0},
     cc_s_phase_weighting= {"E": 1.0, "N": 1.0, "1": 1.0, "2": 1.0},
     cc_min_allowed_cross_corr_coeff=0.7,
-    ph2dt_sets=ph2dt_sets, 
+    ph2dt_sets=ph2dt_sets,
     hypodd_sets=hypodd_sets)
 
 # Setup the velocity model. This is just a constant velocity model.
@@ -156,22 +154,18 @@ relocator.setup_velocity_model(
 # Add the necessary files. Call a function multiple times if necessary.
 print('Adding event files to relocator object')
 relocator.add_event_files(cat_file)
-print('Creating list of all self_detection wav directories.')
-self_files = [
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/selfs_rotnga_2012.txt',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/selfs_rotnga_2013.txt',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/selfs_rotnga_2014.txt',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/selfs_rotnga_2015.txt']
-selfs = []
-for self_file in self_files:
-    with open(self_file, 'r') as f:
-        rdr = csv.reader(f)
-        for row in rdr:
-            selfs.append(str(row[0]))
+# Now loop catalog and add wavs for only events in it
 data_file_list = []
-for self in selfs:
-    print('Adding %s to file list' % os.path.join(wav_dir, self, '*'))
-    data_file_list.extend(glob(os.path.join(wav_dir, self, '*')))
+print('Finding only event wavs in catalog')
+print('Reading catalog...')
+cat = read_events(cat_file)
+names = [str(ev.resource_id).split('/')[-1] for ev in cat]
+del cat
+gc.collect()
+for name in names:
+    print('Adding detection: %s to file list' % os.path.join(wav_dir,
+                                                             name, '*'))
+    data_file_list.extend(glob(os.path.join(wav_dir, name, '*')))
 print('Adding wavs to relocator object')
 relocator.add_waveform_files(data_file_list)
 print('Adding station files to relocator object')
