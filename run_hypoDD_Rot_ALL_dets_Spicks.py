@@ -15,7 +15,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 cat_files = glob('/Volumes/GeoPhysics_07/users-data/hoppche/detections/12-15/Rot_det_spicks_cat_parts/*')
 out_dir_root = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_Rot_spicks_{}'
 out_file_root = 'Catalog_Rot_ALL_dets_mags_cc7_spicks_{}.xml'
-temp_cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_7_Spicks/ALL_TEMPS_ROT_Spicks_just_HypoDD_cc0.7.xml'
+temp_cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_7_Spicks/Every_other_temp_ROT_Spicks_just_HypoDD_cc0.7.xml'
 work_dir_root = out_dir_root
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
