@@ -23,7 +23,7 @@ work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Nga_7_Spi
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_NGA_HypoDD_cc0.7_Spicks_manual.xml'
+out_file = 'cat_ALL_TEMPS_NGA_HypoDD_cc0.7_Spicks_manual_rewt_no_corrections.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
