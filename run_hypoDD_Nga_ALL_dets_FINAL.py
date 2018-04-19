@@ -13,8 +13,8 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/12-15/Catalog_Nga_ALL_dets_FINAL_4-4-18_ids.xml'
-out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_Nga_w_manual_rewt_FINAL'
-out_file = 'Catalog_Nga_ALL_dets_FINAL.xml'
+out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_Nga_w_manual_rewt_FINAL_cc0.8'
+out_file = 'Catalog_Nga_ALL_dets_FINAL_cc0.8.xml'
 work_dir = out_dir
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
@@ -132,7 +132,7 @@ relocator = HypoDDRelocator(
     cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
     cc_s_phase_weighting= {"E": 1.0, "N": 1.0, "1": 1.0, "2": 1.0},
-    cc_min_allowed_cross_corr_coeff=0.7,
+    cc_min_allowed_cross_corr_coeff=0.8,
     ph2dt_sets=ph2dt_sets,
     hypodd_sets=hypodd_sets)
 
