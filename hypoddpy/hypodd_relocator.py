@@ -881,7 +881,7 @@ class HypoDDRelocator(object):
                 cc_filename = "%i_%i.txt" % (event_id_1, event_id_2)
                 cc_filepaths = [os.path.join(cc_dir, cc_filename)
                                 for cc_dir in cc_dirs]
-                if not np.any(os.path.exists(pth) for pth in cc_filepaths):
+                if not np.any([os.path.exists(pth) for pth in cc_filepaths]):
                     event_id_pairs.append((event_id_1, event_id_2))
         return event_id_pairs
 
@@ -960,8 +960,8 @@ class HypoDDRelocator(object):
         # Assemble final file.
         final_string = []
         # iglob returns iterators, use itertools.chain to combine them
-        for cc_file in chain(glob.iglob(os.path.join(cc_dir, "*.txt"))
-                             for cc_dir in cc_dirs):
+        for cc_file in chain(*[glob.iglob(os.path.join(cc_dir, "*.txt"))
+                               for cc_dir in cc_dirs]):
             with open(cc_file, "r") as open_file:
                 final_string.append(open_file.read().strip())
         final_string = "\n".join(final_string)
