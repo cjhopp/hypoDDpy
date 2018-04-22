@@ -8,6 +8,8 @@ import glob
 import json
 import logging
 import math
+import numpy as np
+from itertools import chain
 from obspy.core import read, Stream, UTCDateTime
 from obspy.core.event import Catalog, Comment, Origin, read_events, \
     ResourceIdentifier
@@ -866,7 +868,7 @@ class HypoDDRelocator(object):
         self.log("Successfully loaded cross correlation results from file: "
                  "%s." % filename)
   
-    def get_event_id_pairs(self, cc_dir, dt_ct_path):
+    def get_event_id_pairs(self, cc_dirs, dt_ct_path):
         event_id_pairs = []
         with open(dt_ct_path, "r") as open_file:
             for line in open_file:
@@ -877,8 +879,9 @@ class HypoDDRelocator(object):
                 line = line[1:]
                 event_id_1, event_id_2 = map(int, line.split())
                 cc_filename = "%i_%i.txt" % (event_id_1, event_id_2)
-                cc_filepath = os.path.join(cc_dir, cc_filename)
-                if not os.path.exists(cc_filepath):
+                cc_filepaths = [os.path.join(cc_dir, cc_filename)
+                                for cc_dir in cc_dirs]
+                if not np.any(os.path.exists(pth) for pth in cc_filepaths):
                     event_id_pairs.append((event_id_1, event_id_2))
         return event_id_pairs
 
@@ -895,16 +898,22 @@ class HypoDDRelocator(object):
             return
         # This is by far the lengthiest operation and will be broken up in
         # smaller steps
-        cc_dir = os.path.join(self.paths["working_files"], "cc_files")
-        if not os.path.exists(cc_dir):
-            os.makedirs(cc_dir)
+        # CJH Creating 30 (arbitrarily) cc_files directories for cases where
+        # number of inodes may be exceeded for single directory
+        cc_dirs = []
+        for i in range(ncores):
+            cc_dir = os.path.join(self.paths["working_files"],
+                                  "cc_files", str(i))
+            cc_dirs.append(cc_dir)
+            if not os.path.exists(cc_dir):
+                os.makedirs(cc_dir)
         # Read the dt.ct file and get all event pairs.
         dt_ct_path = os.path.join(self.paths["input_files"], "dt.ct")
         if not os.path.exists(dt_ct_path):
             msg = "dt.ct does not exists. Did ph2dt run successfully?"
             raise HypoDDException(msg)
         cat_len = len(self.events) # For print purposes in parallel only
-        event_id_pairs = self.get_event_id_pairs(cc_dir, dt_ct_path)
+        event_id_pairs = self.get_event_id_pairs(cc_dirs, dt_ct_path)
         start_time = time.time()
         # Create list of all kwargs for correlation function
         evs = [(evt_pair, {'event_1_id': self.event_map[evt_pair[0]],
@@ -935,9 +944,9 @@ class HypoDDRelocator(object):
                         waveform_information=self.waveform_information,
                         _find_data=_find_data,
                         cc_param=self.cc_param,
-                        cc_dir=cc_dir,
+                        cc_dir=cc_dirs[i],
                         cat_len=cat_len)
-                        for evt_pair_list in event_pair_lists)
+                        for i, evt_pair_list in enumerate(event_pair_lists))
         # Now update self.cc_results from all correlation results
         # Does this account for double counting of events??
         for result in results:
@@ -950,7 +959,9 @@ class HypoDDRelocator(object):
             self.save_cross_correlation_results(outfile)
         # Assemble final file.
         final_string = []
-        for cc_file in glob.iglob(os.path.join(cc_dir, "*.txt")):
+        # iglob returns iterators, use itertools.chain to combine them
+        for cc_file in chain(glob.iglob(os.path.join(cc_dir, "*.txt"))
+                             for cc_dir in cc_dirs):
             with open(cc_file, "r") as open_file:
                 final_string.append(open_file.read().strip())
         final_string = "\n".join(final_string)
