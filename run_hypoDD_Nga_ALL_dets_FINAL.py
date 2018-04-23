@@ -150,23 +150,26 @@ relocator.setup_velocity_model(
                 (50.0, 7.4)],
     vp_vs_ratio=1.7)
 
-# Add the necessary files. Call a function multiple times if necessary.
-print('Adding event files to relocator object')
-relocator.add_event_files(cat_file)
-# Now loop catalog and add wavs for only events in it
-data_file_list = []
-print('Finding only event wavs in catalog')
-print('Reading catalog...')
-cat = read_events(cat_file)
-names = [str(ev.resource_id).split('/')[-1] for ev in cat]
-del cat
-gc.collect()
-for name in names:
-    print('Adding detection: %s to file list' % os.path.join(wav_dir,
-                                                             name, '*'))
-    data_file_list.extend(glob(os.path.join(wav_dir, name, '*')))
-print('Adding wavs to relocator object')
-relocator.add_waveform_files(data_file_list)
+if os.path.isfile('{}/input_files/dt.cc'.format(out_dir)):
+    print('Skipping waveform reading as output already created')
+else:
+    # Add the necessary files. Call a function multiple times if necessary.
+    print('Adding event files to relocator object')
+    relocator.add_event_files(cat_file)
+    # Now loop catalog and add wavs for only events in it
+    data_file_list = []
+    print('Finding only event wavs in catalog')
+    print('Reading catalog...')
+    cat = read_events(cat_file)
+    names = [str(ev.resource_id).split('/')[-1] for ev in cat]
+    del cat
+    gc.collect()
+    for name in names:
+        print('Adding detection: %s to file list' % os.path.join(wav_dir,
+                                                                 name, '*'))
+        data_file_list.extend(glob(os.path.join(wav_dir, name, '*')))
+    print('Adding wavs to relocator object')
+    relocator.add_waveform_files(data_file_list)
 print('Adding station files to relocator object')
 relocator.add_station_files(glob(sta_file))
 print('Starting relocation run')
