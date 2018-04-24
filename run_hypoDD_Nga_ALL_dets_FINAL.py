@@ -152,10 +152,10 @@ relocator.setup_velocity_model(
 
 if os.path.isfile('{}/input_files/dt.cc'.format(out_dir)):
     print('Skipping waveform reading as output already created')
-else:
     # Add the necessary files. Call a function multiple times if necessary.
     print('Adding event files to relocator object')
     relocator.add_event_files(cat_file)
+else:
     # Now loop catalog and add wavs for only events in it
     data_file_list = []
     print('Finding only event wavs in catalog')
