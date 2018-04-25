@@ -13,7 +13,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/12-15/Catalog_Nga_ALL_dets_FINAL_4-4-18_ids.xml'
 out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_Nga_w_manual_rewt_FINAL_multidir'
-out_file = 'Catalog_Nga_ALL_dets_FINAL_AQs.xml'
+out_file = 'Catalog_Nga_ALL_dets_FINAL_w_depths.xml'
 work_dir = out_dir
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
@@ -69,6 +69,7 @@ hypodd_sets = {
     'MAXGAP' : -999,
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
     'ISTART' : 2,
+    # Remove airquakes? 0 = No, 1 = Yes
     'IAQ' : 0,
     # Iterations
     # List each iteration as a string in following order...

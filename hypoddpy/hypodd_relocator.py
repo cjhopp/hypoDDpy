@@ -312,10 +312,11 @@ class HypoDDRelocator(object):
                     for sta in net:
                         station_id = "%s.%s" % (net.code,
                                                 sta.code)
+                        depth = sta[0].depth # Handle borehole stations
                         self.stations[station_id] = {
                             "latitude": sta.latitude,
                             "longitude": sta.longitude,
-                            "elevation": int(round(sta.elevation))}
+                            "elevation": int(round(sta.elevation - depth))}
         with open(serialized_station_file, "w") as open_file:
             json.dump(self.stations, open_file)
         self.log("Done parsing stations.")
