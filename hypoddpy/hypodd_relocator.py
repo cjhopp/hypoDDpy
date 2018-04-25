@@ -313,6 +313,7 @@ class HypoDDRelocator(object):
                         station_id = "%s.%s" % (net.code,
                                                 sta.code)
                         depth = sta[0].depth # Handle borehole stations
+                        print('Station {} depth: {}'.format(station_id, depth))
                         self.stations[station_id] = {
                             "latitude": sta.latitude,
                             "longitude": sta.longitude,
