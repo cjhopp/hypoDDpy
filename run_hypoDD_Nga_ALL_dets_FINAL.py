@@ -70,7 +70,7 @@ hypodd_sets = {
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
     'ISTART' : 2,
     # Remove airquakes? 0 = No, 1 = Yes
-    'IAQ' : 0,
+    'IAQ' : 1,
     # Iterations
     # List each iteration as a string in following order...
     # NITER = number of iterations for this set of parameters
@@ -82,11 +82,11 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #
              # NITER  WTCCP WTCCS WRCC WDCC WTCTP  WTCTS  WRCT WDCT  DAMP
-    'iters' : ["   5  0.50  0.25    3    2   0.7    0.45    2    2   250",
-               "   5  0.50  0.25    2    1   0.7    0.35    2    2   200",
-               "   3  0.50  0.25    2    1   0.50   0.25    2   1.5  150",
-               "   3  0.70  0.35    2   0.75 0.30   0.15    2    1   100",
-               "   3  1.00  0.50    2   0.50 0.01   0.01    2  0.75  100"]
+    'iters' : ["   7  0.50  0.25    3    2   0.7    0.45    2    2   250",
+               "   7  0.50  0.25    2    1   0.7    0.35    2    2   200",
+               "   5  0.50  0.25    2    1   0.50   0.25    2   1.5  150",
+               "   5  0.70  0.35    2   0.75 0.30   0.15    2    1   100",
+               "   5  1.00  0.50    2   0.50 0.01   0.01    2  0.75  100"]
             }
 
 ### Cross-correlation Plotting
