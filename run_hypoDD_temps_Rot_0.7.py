@@ -10,7 +10,8 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
-cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Rot_stefan_Spicks_slocs.xml'
+# cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Rot_stefan_Spicks_slocs.xml'
+cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Rot_w_obspyck.xml'
 
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
@@ -19,11 +20,11 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # working dir
-work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_7_Spicks'
+work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obspyck'
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_ROT_Spicks_HypoDD_cc0.7.xml'
+out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
@@ -85,11 +86,11 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.30  0.30    2    1   0.7   0.7    2    1   150",
-               "   5  0.30  0.30    2    1   0.7   0.7    2    1   150",
-               "   5  0.50  0.50    2    1  0.50   0.5    2    1   100",
-               "   5  0.70  0.70    2  0.5  0.30   0.3    2  0.5    50",
-               "   5  1.00  1.00    2  0.25 0.01  0.01    2  0.25   50"]
+    'iters' : ["   5  0.50  0.25    3    2   0.7    0.45    2    2   250",
+               "   5  0.50  0.25    2    1   0.7    0.35    2    2   200",
+               "   3  0.50  0.25    2    1   0.50   0.25    2   1.5  150",
+               "   3  0.70  0.35    2   0.75 0.30   0.15    2    1   100",
+               "   3  1.00  0.50    2   0.50 0.01   0.01    2  0.75  100"]
             }
 
 ### Cross-correlation Plotting
