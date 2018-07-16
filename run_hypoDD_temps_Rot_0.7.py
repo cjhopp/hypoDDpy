@@ -20,7 +20,7 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # working dir
-work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obspyck'
+work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obspyck_clean'
 
 # output dir and catalog file
 out_dir = work_dir
