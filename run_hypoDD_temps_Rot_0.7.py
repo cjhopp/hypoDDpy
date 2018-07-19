@@ -24,7 +24,7 @@ work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obs
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'det_cat_mcc0.5_shift0.2_ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7.xml'
+out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_vmod.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
@@ -144,9 +144,9 @@ relocator.setup_velocity_model(
     model_type="layered_p_velocity_with_constant_vp_vs_ratio",
     layer_tops=[(-0.6, 1.9),
                 (0.2, 2.6),
-                (1.0, 3.5),
-                (1.5, 3.6),
-                (2.0, 3.9),
+                (1.0, 4.5),
+                (1.5, 4.6),
+                (2.0, 4.9),
                 (3.0, 4.9),
                 (5.0, 5.4),
                 (10.0, 5.8),
