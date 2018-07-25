@@ -11,7 +11,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Rot_stefan_Spicks_slocs.xml'
-cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Rot_w_obspyck_rot_vmod.xml'
+cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/templates/12-15/big_space_clusters/cat_tribe_Rot_w_obspyck_no_periph_reloc.xml'
 
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
@@ -24,7 +24,7 @@ work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obs
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_vmod_from_outset.xml'
+out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_no_periph.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
@@ -53,7 +53,6 @@ ph2dt_sets = {
     # within geographic cluster
     'MAXOBS' : 45
             }
-
 ### HypoDD Settings
 hypodd_sets = {
     # 1 = cross-corr only, 2 = absolute (cat) data only, 3 = cross-corr and catalog
