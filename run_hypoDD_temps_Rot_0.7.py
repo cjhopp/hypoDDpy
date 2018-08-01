@@ -24,7 +24,7 @@ work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obs
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_just_RT.xml'
+out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_just_RT_rewt.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
@@ -85,10 +85,10 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   5  0.50  0.25    3    2   0.7    0.45    2    2   300",
-               "   5  0.50  0.25    2    2   0.7    0.35    2    2   250",
-               "   5  0.50  0.25    2    2   0.50   0.25    2    2   200",
-               "   1  0.70  0.35    2   1.5  0.30   0.15    2   1.5  150"]
+    'iters' : ["   7  0.25  0.10    3    2   0.9    0.45    2    2   500",
+               "   5  0.50  0.25    2    2   0.7    0.35    2    2   450",
+               "   5  0.50  0.25    2    2   0.50   0.25    2    2   350",
+               "   3  0.70  0.35    2   1.5  0.30   0.15    2   1.5  250"]
             }
 
 ### Cross-correlation Plotting
