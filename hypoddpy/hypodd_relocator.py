@@ -474,8 +474,11 @@ class HypoDDRelocator(object):
                 current_event["magnitude"] = event.magnitudes[0].mag
             else:
                 current_event["magnitude"] = 0.0 # Per suggestion in manual
-            # Always take the first origin.
-            origin = event.origins[0]
+            # Always take the preferred origin!
+            try:
+                origin = event.preferred_origin()
+            except:
+                origin = event.origins[-1] # Or the last at least
             current_event["origin_time"] = origin.time
             # Origin time error.
             if origin.time_errors.uncertainty is not None:
