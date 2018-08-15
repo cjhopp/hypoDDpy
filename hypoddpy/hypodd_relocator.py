@@ -308,6 +308,15 @@ class HypoDDRelocator(object):
             # CJH Added handling of stationXML containing multiple stations
             except:
                 inv = read_inventory(station_file)
+                min_elev = [sta.elevation - sta[0].depth
+                            for net in inv for sta in net]
+                # For the case where minimum elevation is less than zero
+                # Shift everything up by the amount below 0 elevation
+                # Be sure to account for this when plotting later!!
+                if min_elev < 0.:
+                    bh_correct = np.abs(min_elev)
+                else:
+                    bh_correct = 0.
                 for net in inv:
                     for sta in net:
                         station_id = "%s.%s" % (net.code,
@@ -317,7 +326,8 @@ class HypoDDRelocator(object):
                         self.stations[station_id] = {
                             "latitude": sta.latitude,
                             "longitude": sta.longitude,
-                            "elevation": int(round(sta.elevation - depth))}
+                            "elevation": int(round(sta.elevation - depth
+                                                   + bh_correct))}
         with open(serialized_station_file, "w") as open_file:
             json.dump(self.stations, open_file)
         self.log("Done parsing stations.")
