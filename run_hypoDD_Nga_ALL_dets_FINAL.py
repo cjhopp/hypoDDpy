@@ -82,11 +82,10 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #
              # NITER  WTCCP WTCCS WRCC WDCC WTCTP  WTCTS  WRCT WDCT  DAMP
-    'iters' : ["   6  0.50  0.25    3    2   0.7    0.45    2    2   250",
-               "   5  0.50  0.25    2    1   0.7    0.35    2    2   200",
+    'iters' : ["   6  0.10  0.05    3    2   0.9    0.45    2    2   300",
+               "   5  0.40  0.20    2    1   0.7    0.35    2    2   200",
                "   4  0.50  0.25    2    1   0.50   0.25    2   1.5  150",
-               "   3  0.70  0.35    2   0.75 0.30   0.15    2    1   100",
-               "   3  1.00  0.50    2   0.50 0.01   0.01    2  0.75  100"]
+               "   2  0.70  0.35    2   0.75 0.30   0.15    2    1   100"]
             }
 
 ### Cross-correlation Plotting
