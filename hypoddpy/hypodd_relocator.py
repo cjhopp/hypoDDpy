@@ -308,8 +308,8 @@ class HypoDDRelocator(object):
             # CJH Added handling of stationXML containing multiple stations
             except:
                 inv = read_inventory(station_file)
-                min_elev = [sta.elevation - sta[0].depth
-                            for net in inv for sta in net]
+                min_elev = min([sta.elevation - sta[0].depth
+                                for net in inv for sta in net])
                 # For the case where minimum elevation is less than zero
                 # Shift everything up by the amount below 0 elevation
                 # Be sure to account for this when plotting later!!
