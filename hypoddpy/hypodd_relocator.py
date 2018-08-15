@@ -461,6 +461,7 @@ class HypoDDRelocator(object):
         catalog = Catalog()
         for event in self.event_files:
             catalog += read_events(event)
+        print('Catalog has length {}'.format(len(catalog)))
         self.events = []
         # Keep track of the number of discarded picks.
         discarded_picks = 0
