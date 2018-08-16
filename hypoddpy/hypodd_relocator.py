@@ -459,6 +459,7 @@ class HypoDDRelocator(object):
             return
         self.log("Reading all events...")
         catalog = Catalog()
+        print(self.event_files)
         for event in self.event_files:
             catalog += read_events(event)
         print('Catalog has length {}'.format(len(catalog)))
