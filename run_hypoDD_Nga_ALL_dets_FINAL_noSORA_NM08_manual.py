@@ -13,7 +13,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
 cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/12-15/Catalog_Nga_ALL_dets_FINAL_18-8-18_ids_dd_mags_noSORA_NM08_manual.xml'
 out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_dets_Nga_w_manual_rewt_FINAL_noSORA_NM08_manual'
-out_file = 'Catalog_Nga_ALL_dets_FINAL_noSORA_NM08_manual.xml'
+out_file = 'Catalog_Nga_ALL_dets_FINAL_noSORA_NM08_manual_rewt.xml'
 work_dir = out_dir
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
@@ -82,9 +82,9 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #
              # NITER  WTCCP WTCCS WRCC WDCC WTCTP  WTCTS  WRCT WDCT  DAMP
-    'iters' : ["   8  0.10  0.05    3    2   0.9    0.45    2    2   300",
-               "   5  0.40  0.20    2    1   0.7    0.35    2    2   200",
-               "   4  0.50  0.25    2    1   0.50   0.25    2   1.5  150",
+    'iters' : ["   8  0.10  0.05    3    4   0.9    0.45    2    4   300",
+               "   5  0.40  0.20    2    3   0.7    0.35    2    3   200",
+               "   4  0.50  0.25    2    2   0.50   0.25    2    2   150",
                "   2  0.70  0.35    2    1   0.30   0.15    2    1   100"]
             }
 
