@@ -34,14 +34,14 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 1.0,
+    'MAXSEP' : 4.0,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 2000,
     # Minimum number of links required to define a neighbour
-    'MINLNK' : 6,
+    'MINLNK' : 5,
     # Minimum number of links per pair
-    'MINOBS' : 6,
+    'MINOBS' : 4,
     # Max number of links per pair.
     # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
@@ -68,7 +68,7 @@ hypodd_sets = {
     # Set to -999 to disable
     'MAXGAP' : -999,
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
-    'ISTART' : 2,
+    'ISTART' : 1,
     # Remove airquakes? 0 = No, 1 = Yes
     'IAQ' : 1,
     # Iterations
@@ -83,8 +83,8 @@ hypodd_sets = {
                     #   Cross-corr Data   #    Catalog Data    #
              # NITER  WTCCP WTCCS WRCC WDCC WTCTP  WTCTS  WRCT WDCT  DAMP
     'iters' : ["   8  0.10  0.05    5    5   0.9    0.45    5    5   50",
-               "   7  0.40  0.20    4    4   0.7    0.35    4    4   40",
-               "   6  0.50  0.25    3    3   0.50   0.25    3    3   40",
+               "   8  0.40  0.20    4    4   0.7    0.35    4    4   50",
+               "   4  0.50  0.25    3    3   0.50   0.25    3    3   40",
                "   4  0.70  0.35    2    2   0.30   0.15    2    2   20"]
             }
 
@@ -131,7 +131,7 @@ relocator = HypoDDRelocator(
     cc_filter_min_freq=3.0,
     cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
-    cc_s_phase_weighting= {"E": 0.5, "N": 0.5, "1": 0.5, "2": 0.5},
+    cc_s_phase_weighting= {"E": 1.0, "N": 1.0, "1": 1.0, "2": 1.0},
     cc_min_allowed_cross_corr_coeff=0.7,
     ph2dt_sets=ph2dt_sets,
     hypodd_sets=hypodd_sets)
