@@ -34,14 +34,14 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 1.0,
+    'MAXSEP' : 4.0,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 2000,
     # Minimum number of links required to define a neighbour
-    'MINLNK' : 6,
+    'MINLNK' : 5,
     # Minimum number of links per pair
-    'MINOBS' : 6,
+    'MINOBS' : 4,
     # Max number of links per pair.
     # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
