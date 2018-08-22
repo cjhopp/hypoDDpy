@@ -68,7 +68,7 @@ hypodd_sets = {
     # Set to -999 to disable
     'MAXGAP' : -999,
     # Initial locations. 1 = start from cluster centroid, 2 = start from catalog locations
-    'ISTART' : 2,
+    'ISTART' : 1,
     # Remove airquakes? 0 = No, 1 = Yes
     'IAQ' : 1,
     # Iterations
