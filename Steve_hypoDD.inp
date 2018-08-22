@@ -1,0 +1,29 @@
+hypoDD_2
+dt_squaredcc.cc
+dt.ct
+event2.sel
+station.sel
+
+
+hypoDD.sta
+hypoDD.res
+hypoDD.src
+* IDAT IPHA DIST
+   3     3   50
+* OBSCC OBSCT MINDS MAXDS MAXGAP
+   0     10    -999   -999  180
+*ISTART ISOLV IAQ NSET
+   1     2    1   5
+* NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP
+    5    0.01  0.01 -999    2   1.0   1.0 -999    2 500
+    5    0.01  0.01 -999    2   1.0   1.0    6    2 500
+    5    1.00  1.00 -999    1  0.01  0.01    6    2 500
+    5    1.00  1.00    6    1  0.01  0.01    6    2 500
+    5    1.00  1.00    6  0.5  0.01  0.01    6    2 500
+0
+8 1.75
+-0.6 0.2 1.0 1.5 2.0 2.5 3.0 5.0
+2.0 2.8 3.5 3.75 4.0 4.5 5.0 5.5
+* Cluster Indices
+1
+* Event indices
