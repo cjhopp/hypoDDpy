@@ -11,9 +11,9 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
-cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/12-15/cat_NM10_stim_manual_picks_no_sta_corrections.xml'
+cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/12-15/cat_NM10_stim_manual_picks.xml'
 out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/Nga_NM10_dets_w_manual'
-out_file = 'Catalog_Nga_NM10_dets_manual_no_corrections.xml'
+out_file = 'Catalog_Nga_NM10_dets_manual.xml'
 work_dir = out_dir
 # time slice directory
 wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
