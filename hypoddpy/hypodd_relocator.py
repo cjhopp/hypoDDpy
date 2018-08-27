@@ -1124,12 +1124,26 @@ class HypoDDRelocator(object):
         self.log("Writing final output file...")
         hypodd_reloc = os.path.join(os.path.join(self.working_dir,
             "output_files", "hypoDD.reloc"))
-
+        # CJH Allow reading of TOA file and create Arrivals for origin
+        hypodd_src = os.path.join(os.path.join(self.working_dir,
+            "output_files", "hypoDD.src"))
+        # Make dict of TOA info {event_id: {sta: [az, TOA]}}
+        if os.path.exists(hypodd_src):
+            src_dict = {}
+            with open(hypodd_src, "r") as src_file:
+                for line in src_file:
+                    eid, lat, lon, stachan, _, km, az, toa, _, _, _, \
+                        _, _, _, _, _, _ = line.split()
+                    if int(eid) in src_dict:
+                        src_dict[int(eid)][stachan.split('.')[1]] = \
+                            [km, az, toa]
+                    else:
+                        src_dict[int(eid)] = {stachan.split('.')[1]:
+                                                  [km, az, toa]}
         cat = Catalog()
         self.output_catalog = cat
         for filename in self.event_files:
             cat += read_events(filename)
-
         with open(hypodd_reloc, "r") as open_file:
             for line in open_file:
                 event_id, lat, lon, depth, _, _, _, _, _, _, year, month, \
@@ -1163,6 +1177,18 @@ class HypoDDRelocator(object):
                 # on.
                 new_origin.comments.append(Comment(
                     text="HypoDD cluster id: %i" % cluster_id))
+                # Add dummy arrivals with toa and azimuth
+                if src_dict:
+                    for pk in event.picks:
+                        if (pk.waveform_id.station_code in src_dict[event_id]
+                            and pk.waveform_id.channel_code[-1] == 'Z'):
+                            sta = pk.waveform_id.station_code
+                            new_origin.arrivals.append(
+                                Arrival(
+                                    phase='P', pick_id=pk.resource_id.id,
+                                    takeoff_angle=src_dict[event_id][sta][2],
+                                    azimuth=src_dict[event_id][sta][1],
+                                    distance=src_dict[event_id][sta][0]))
                 event.origins.append(new_origin)
         cat.write(self.output_event_file, format="quakeml")
 
