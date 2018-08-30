@@ -114,7 +114,7 @@ class HypoDDRelocator(object):
         self._configure_paths()
 
     def start_relocation(self, ncores, output_event_file, 
-                         output_cross_correlation_file=None,
+                         q=None,
                          create_plots=True):
         """
         Start the relocation with HypoDD and write the output to
