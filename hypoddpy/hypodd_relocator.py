@@ -144,7 +144,7 @@ class HypoDDRelocator(object):
         self._compile_hypodd()
         self._run_ph2dt()
         self._parse_waveform_files()
-        self._cross_correlate_picks(ncores, outfile=output_cross_correlation_file)
+        self._cross_correlate_picks(ncores, outfile=None)
         self._write_hypoDD_inp_file()
         self._run_hypodd()
         self._create_output_event_file()
