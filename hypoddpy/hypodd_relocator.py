@@ -12,7 +12,7 @@ import numpy as np
 from itertools import chain
 from obspy.core import read, Stream, UTCDateTime
 from obspy.core.event import Catalog, Comment, Origin, read_events, \
-    ResourceIdentifier
+    ResourceIdentifier, Arrival
 from obspy.signal.cross_correlation import xcorr_pick_correction
 from obspy.io.xseed import Parser
 from obspy import read_inventory
@@ -1186,9 +1186,9 @@ class HypoDDRelocator(object):
                             new_origin.arrivals.append(
                                 Arrival(
                                     phase='P', pick_id=pk.resource_id.id,
-                                    takeoff_angle=src_dict[event_id][sta][2],
-                                    azimuth=src_dict[event_id][sta][1],
-                                    distance=src_dict[event_id][sta][0]))
+                                    takeoff_angle=src_dict[int(ev_id)][sta][2],
+                                    azimuth=src_dict[int(ev_id)][sta][1],
+                                    distance=src_dict[int(ev_id)][sta][0]))
                 event.origins.append(new_origin)
         cat.write(self.output_event_file, format="quakeml")
 
