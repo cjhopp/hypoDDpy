@@ -39,9 +39,9 @@ ph2dt_sets = {
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 2000,
     # Minimum number of links required to define a neighbour
-    'MINLNK' : 6,
+    'MINLNK' : 4,
     # Minimum number of links per pair
-    'MINOBS' : 6,
+    'MINOBS' : 4,
     # Max number of links per pair.
     # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
