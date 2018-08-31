@@ -40,14 +40,14 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 2,
+    'MAXSEP' : 4.,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 1000,
     # Minimum number of links required to define a neighbour
     'MINLNK' : 6,
     # Minimum number of links per pair 
-    'MINOBS' : 1,
+    'MINOBS' : 6,
     # Max number of links per pair. 
     # Should set to total number of stations to consider all phase pairs 
     # within geographic cluster
@@ -85,10 +85,10 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #  
              # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP 
-    'iters' : ["   7  0.25  0.10    3    2   0.9    0.45    2    2   500",
-               "   5  0.50  0.25    2    2   0.7    0.35    2    2   450",
-               "   5  0.50  0.25    2    2   0.50   0.25    2    2   350",
-               "   3  0.70  0.35    2   1.5  0.30   0.15    2   1.5  250"]
+    'iters' : ["   8  0.10  0.05    5    5   0.9    0.45    5    5   400",
+               "   7  0.40  0.20    4    4   0.7    0.35    4    4   400",
+               "   6  0.50  0.25    3    3   0.50   0.25    3    3   300",
+               "   4  0.70  0.35    2    2   0.30   0.15    2    2   300"]
             }
 
 ### Cross-correlation Plotting
@@ -155,24 +155,27 @@ relocator.setup_velocity_model(
 # Add the necessary files. Call a function multiple times if necessary.
 print('Adding event files to relocator object')
 relocator.add_event_files(cat_file)
-print('Creating list of all self_detection wav directories.')
-self_files = [
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/selfs_rotnga_2012.txt',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/selfs_rotnga_2013.txt',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/selfs_rotnga_2014.txt',
-    '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/selfs_rotnga_2015.txt']
-selfs = []
-for self_file in self_files:
-    with open(self_file, 'r') as f:
-        rdr = csv.reader(f)
-        for row in rdr:
-            selfs.append(str(row[0]))
-data_file_list = []
-for self in selfs:
-    print('Adding %s to file list' % os.path.join(wav_dir, self, '*'))
-    data_file_list.extend(glob(os.path.join(wav_dir, self, '*')))
-print('Adding wavs to relocator object')
-relocator.add_waveform_files(data_file_list)
+if (os.path.isfile('{}/working_files/waveform_information.json'.format(out_dir))):
+    print('Skipping waveform reading as output already created')
+else:
+    print('Creating list of all self_detection wav directories.')
+    self_files = [
+        '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2012/selfs_rotnga_2012.txt',
+        '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2013/selfs_rotnga_2013.txt',
+        '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2014/selfs_rotnga_2014.txt',
+        '/Volumes/GeoPhysics_07/users-data/hoppche/detections/2015/selfs_rotnga_2015.txt']
+    selfs = []
+    for self_file in self_files:
+        with open(self_file, 'r') as f:
+            rdr = csv.reader(f)
+            for row in rdr:
+                selfs.append(str(row[0]))
+    data_file_list = []
+    for self in selfs:
+        print('Adding %s to file list' % os.path.join(wav_dir, self, '*'))
+        data_file_list.extend(glob(os.path.join(wav_dir, self, '*')))
+    print('Adding wavs to relocator object')
+    relocator.add_waveform_files(data_file_list)
 print('Adding station files to relocator object')
 relocator.add_station_files(glob(sta_file))
 print('Starting relocation run')
