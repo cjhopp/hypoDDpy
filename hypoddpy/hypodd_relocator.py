@@ -1146,10 +1146,10 @@ class HypoDDRelocator(object):
             cat += read_events(filename)
         with open(hypodd_reloc, "r") as open_file:
             for line in open_file:
-                event_id, lat, lon, depth, _, _, _, _, _, _, year, month, \
+                ev_id, lat, lon, depth, _, _, _, _, _, _, year, month, \
                     day, hour, minute, second, _, _, _, _, _, _, _, \
                     cluster_id = line.split()
-                event_id = self.event_map[int(event_id)]
+                event_id = self.event_map[int(ev_id)]
                 cluster_id = int(cluster_id)
                 res_id = ResourceIdentifier(event_id)
                 lat, lon, depth = map(float, [lat, lon, depth])
@@ -1180,7 +1180,7 @@ class HypoDDRelocator(object):
                 # Add dummy arrivals with toa and azimuth
                 if src_dict:
                     for pk in event.picks:
-                        if (pk.waveform_id.station_code in src_dict[event_id]
+                        if (pk.waveform_id.station_code in src_dict[ev_id]
                             and pk.waveform_id.channel_code[-1] == 'Z'):
                             sta = pk.waveform_id.station_code
                             new_origin.arrivals.append(
