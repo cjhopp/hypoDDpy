@@ -24,7 +24,7 @@ work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obs
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_just_RT_rewt.xml'
+out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_just_RT_relinked.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
