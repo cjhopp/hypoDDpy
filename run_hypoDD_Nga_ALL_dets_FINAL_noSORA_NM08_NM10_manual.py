@@ -41,7 +41,7 @@ ph2dt_sets = {
     # Minimum number of links required to define a neighbour
     'MINLNK' : 5,
     # Minimum number of links per pair
-    'MINOBS' : 4,
+    'MINOBS' : 5,
     # Max number of links per pair.
     # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
@@ -82,10 +82,10 @@ hypodd_sets = {
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #
              # NITER  WTCCP WTCCS WRCC WDCC WTCTP  WTCTS  WRCT WDCT  DAMP
-    'iters' : ["   8  0.10  0.05    5    5   0.9    0.45    5    5   400",
-               "   7  0.40  0.20    4    4   0.7    0.35    4    4   400",
-               "   6  0.50  0.25    3    3   0.50   0.25    3    3   300",
-               "   4  0.70  0.35    2    2   0.30   0.15    2    2   300"]
+    'iters' : ["   8  0.10  0.05    5    5   0.9    0.45    5    5   500",
+               "   7  0.40  0.20    4    4   0.7    0.35    4    4   500",
+               "   6  0.50  0.25    3    3   0.50   0.25    3    3   500",
+               "   4  0.70  0.35    2    2   0.30   0.15    2    2   400"]
             }
 
 ### Cross-correlation Plotting
