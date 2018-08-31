@@ -39,7 +39,7 @@ ph2dt_sets = {
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 2000,
     # Minimum number of links required to define a neighbour
-    'MINLNK' : 4,
+    'MINLNK' : 5,
     # Minimum number of links per pair
     'MINOBS' : 4,
     # Max number of links per pair.
