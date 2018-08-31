@@ -1180,7 +1180,7 @@ class HypoDDRelocator(object):
                 # Add dummy arrivals with toa and azimuth
                 if src_dict:
                     for pk in event.picks:
-                        if (pk.waveform_id.station_code in src_dict[ev_id]
+                        if (pk.waveform_id.station_code in src_dict[int(ev_id)]
                             and pk.waveform_id.channel_code[-1] == 'Z'):
                             sta = pk.waveform_id.station_code
                             new_origin.arrivals.append(
