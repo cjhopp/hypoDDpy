@@ -1132,8 +1132,11 @@ class HypoDDRelocator(object):
             src_dict = {}
             with open(hypodd_src, "r") as src_file:
                 for line in src_file:
-                    eid, lat, lon, stachan, _, km, az, toa, _, _, _, \
-                        _, _, _, _, _, _ = line.split()
+                    try:
+                        eid, lat, lon, stachan, _, km, az, toa, _, _, _, \
+                            _, _, _, _, _, _ = line.split()
+                    except: # Something wrong with the line (only 15 fields?)
+                        continue
                     if int(eid) in src_dict:
                         src_dict[int(eid)][stachan.split('.')[1]] = \
                             [km, az, toa]
