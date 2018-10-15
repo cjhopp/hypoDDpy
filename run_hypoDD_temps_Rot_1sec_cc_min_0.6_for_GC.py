@@ -20,11 +20,11 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # working dir
-work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obspyck_clean'
+work_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/all_temps_Rot_w_obspyck_for_GC'
 
 # output dir and catalog file
 out_dir = work_dir
-out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.7_rot_just_RT_relinked.xml'
+out_file = 'ALL_TEMPS_ROT_obspyck_HypoDD_cc0.6_for_GC.xml'
 cc_plot_dir = out_dir + '/cc_plots/'
 
 # number of cores for parallel cross-correlation processing
@@ -128,7 +128,7 @@ relocator = HypoDDRelocator(
     working_dir=work_dir,
     cc_time_before=0.05,
     cc_time_after=0.95,
-    cc_maxlag=0.3,
+    cc_maxlag=0.4,
     cc_filter_min_freq=3.0,
     cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
