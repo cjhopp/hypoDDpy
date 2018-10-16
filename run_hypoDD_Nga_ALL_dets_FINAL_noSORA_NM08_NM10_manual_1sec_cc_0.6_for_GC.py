@@ -125,14 +125,14 @@ cc_plot_int = 0
     """
 relocator = HypoDDRelocator(
     working_dir=work_dir,
-    cc_time_before=0.1,
-    cc_time_after=0.5,
-    cc_maxlag=0.3,
+    cc_time_before=0.05,
+    cc_time_after=0.95,
+    cc_maxlag=0.4,
     cc_filter_min_freq=3.0,
     cc_filter_max_freq=20.0,
     cc_p_phase_weighting={"Z": 1.0},
     cc_s_phase_weighting= {"E": 1.0, "N": 1.0, "1": 1.0, "2": 1.0},
-    cc_min_allowed_cross_corr_coeff=0.7,
+    cc_min_allowed_cross_corr_coeff=0.6,
     ph2dt_sets=ph2dt_sets,
     hypodd_sets=hypodd_sets)
 
