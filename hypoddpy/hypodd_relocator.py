@@ -886,7 +886,7 @@ class HypoDDRelocator(object):
         self.log("Successfully loaded cross correlation results from file: "
                  "%s." % filename)
   
-    def get_event_id_pairs(self, cc_dirs, dt_ct_path):
+    def get_event_id_pairs(self, dt_ct_path):
         event_id_pairs = []
         with open(dt_ct_path, "r") as open_file:
             for line in open_file:
@@ -896,11 +896,14 @@ class HypoDDRelocator(object):
                 # Remove leading hashtag.
                 line = line[1:]
                 event_id_1, event_id_2 = map(int, line.split())
-                cc_filename = "%i_%i.txt" % (event_id_1, event_id_2)
-                cc_filepaths = [os.path.join(cc_dir, cc_filename)
-                                for cc_dir in cc_dirs]
-                if not np.any([os.path.exists(pth) for pth in cc_filepaths]):
-                    event_id_pairs.append((event_id_1, event_id_2))
+                # CJH Remove this functionality
+                # CJH Created filesystem issues (exceeded inodes) and
+                # concatenating this many files took far too long.
+                # cc_filename = "%i_%i.txt" % (event_id_1, event_id_2)
+                # cc_filepaths = [os.path.join(cc_dir, cc_filename)
+                #                 for cc_dir in cc_dirs]
+                # if not np.any([os.path.exists(pth) for pth in cc_filepaths]):
+                event_id_pairs.append((event_id_1, event_id_2))
         return event_id_pairs
 
     def _cross_correlate_picks(self, ncores, outfile=None):
@@ -908,6 +911,7 @@ class HypoDDRelocator(object):
         Reads the event pairs matched in dt.ct which are selected by ph2dt and
         calculate cross correlated differential travel_times for every pair.
 
+        :param ncores: Number of cores to use for parallel processing
         :param outfile: Filename of cross correlation results output.
         """
         cc_file_path = os.path.join(self.paths["input_files"], "dt.cc")
@@ -916,22 +920,14 @@ class HypoDDRelocator(object):
             return
         # This is by far the lengthiest operation and will be broken up in
         # smaller steps
-        # CJH Creating 30 (arbitrarily) cc_files directories for cases where
-        # number of inodes may be exceeded for single directory
-        cc_dirs = []
-        for i in range(ncores):
-            cc_dir = os.path.join(self.paths["working_files"],
-                                  "cc_files", str(i))
-            cc_dirs.append(cc_dir)
-            if not os.path.exists(cc_dir):
-                os.makedirs(cc_dir)
         # Read the dt.ct file and get all event pairs.
         dt_ct_path = os.path.join(self.paths["input_files"], "dt.ct")
+        cc_dir = os.path.join(self.paths["working_files"], "cc_files")
         if not os.path.exists(dt_ct_path):
             msg = "dt.ct does not exists. Did ph2dt run successfully?"
             raise HypoDDException(msg)
         cat_len = len(self.events) # For print purposes in parallel only
-        event_id_pairs = self.get_event_id_pairs(cc_dirs, dt_ct_path)
+        event_id_pairs = self.get_event_id_pairs(dt_ct_path)
         start_time = time.time()
         # Create list of all kwargs for correlation function
         evs = [(evt_pair, {'event_1_id': self.event_map[evt_pair[0]],
@@ -960,10 +956,8 @@ class HypoDDRelocator(object):
                     delayed(cross_correlate_evt_pairs)(
                         event_pair_list=evt_pair_list,
                         waveform_information=self.waveform_information,
-                        _find_data=_find_data,
-                        cc_param=self.cc_param,
-                        cc_dir=cc_dirs[i],
-                        cat_len=cat_len)
+                        _find_data=_find_data, cc_param=self.cc_param,
+                        which_list=i, cat_len=cat_len)
                         for i, evt_pair_list in enumerate(event_pair_lists))
         # Now update self.cc_results from all correlation results
         # Does this account for double counting of events??
@@ -977,9 +971,8 @@ class HypoDDRelocator(object):
             self.save_cross_correlation_results(outfile)
         # Assemble final file.
         final_string = []
-        # iglob returns iterators, use itertools.chain to combine them
-        for cc_file in chain(*[glob.iglob(os.path.join(cc_dir, "*.txt"))
-                               for cc_dir in cc_dirs]):
+        # Take all dt.cc_*.txt files and merge them
+        for cc_file in glob('{}/dt.cc_*.txt'.format(cc_dir)):
             with open(cc_file, "r") as open_file:
                 final_string.append(open_file.read().strip())
         final_string = "\n".join(final_string)
@@ -1345,8 +1338,22 @@ def _find_data(waveform_information, station_id, starttime, duration):
     return list(set(filenames))
 
 def cross_correlate_evt_pairs(event_pair_list, waveform_information,
-                              _find_data, cc_param, cc_dir, cat_len):
+                              _find_data, cc_param, which_list, cat_len):
+    """
+    Inner-most function for running correlations of a list of event pairs
+
+    :param event_pair_list: List of event pairs
+    :param waveform_information:
+    :param _find_data: Internal function for finding waveform data
+    :param cc_param: Dict of cross correlation params
+    :param which_list: Which list are we working on? Integer
+    :param cat_len: Length of entire catalog (for progress reporting)
+    :return:
+    """
     cc_results = {}
+    core_buff = io.BytesIO()
+    outfile = os.path.join(self.paths["working_files"], "cc_files",
+                           'dt.cc_{}.txt'.format(str(which_list)))
     for evt_pair_tup in event_pair_list:
         event_1, event_2 = evt_pair_tup[0]
         # Filename for event_pair
@@ -1450,13 +1457,11 @@ def cross_correlate_evt_pairs(event_pair_list, waveform_information,
                     if trace.stats.starttime > max_starttime_st_2 or \
                        trace.stats.endtime < min_endtime_st_2:
                         st_2.remove(trace)
-
                 # cleanup merges, in case the event is included in
                 # multiple traces (happens for events with very close
                 # origin times)
                 st_1.merge(-1)
                 st_2.merge(-1)
-
                 if len(st_1) > 1:
                     msg = "More than one matching trace found for {pick}"
                     print(msg.format(pick=str(pick_1)))
@@ -1495,7 +1500,6 @@ def cross_correlate_evt_pairs(event_pair_list, waveform_information,
                     print(msg)
                     cc_results.setdefault(pick_1['id'], {})[pick_2['id']] = msg
                     continue
-
                 # Call the cross correlation function.
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
@@ -1550,6 +1554,7 @@ def cross_correlate_evt_pairs(event_pair_list, waveform_information,
                     cc_param["cc_min_allowed_cross_corr_coeff"]:
                 continue
             # Otherwise calculate the corrected differential travel time.
+            # Think Lion's version was doing ev2 - ev1? Have changed here.
             diff_travel_time = ((pick_1["pick_time"] - event_1_dict["origin_time"]) -
                                 (pick_2["pick_time"] + pick2_corr - event_2_dict["origin_time"]))
                 #(pick_2["pick_time"] + pick2_corr -
@@ -1562,9 +1567,11 @@ def cross_correlate_evt_pairs(event_pair_list, waveform_information,
                 weight=cross_corr_coeff,
                 phase=pick_1["phase"])
             current_pair_strings.append(string)
-        # Write the file.
-        with open(event_pair_file, "w") as open_file:
-            open_file.write("\n".join(current_pair_strings))
+        # Write to buffer
+        core_buff.write("\n".join(current_pair_strings).tobytes())
+    # Write buffer to file for entire event pair list
+    with open(outfile, 'wb') as f:
+        f.write(core_buff.getvalue())
     return cc_results
 
         
