@@ -10,6 +10,7 @@ import logging
 import math
 import numpy as np
 from itertools import chain
+from obspy.geodetics import kilometer2degrees
 from obspy.core import read, Stream, UTCDateTime
 from obspy.core.event import Catalog, Comment, Origin, read_events, \
     ResourceIdentifier, Arrival
