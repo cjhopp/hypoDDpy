@@ -1192,7 +1192,8 @@ class HypoDDRelocator(object):
                                     phase='P', pick_id=pk.resource_id.id,
                                     takeoff_angle=src_dict[int(ev_id)][sta][2],
                                     azimuth=src_dict[int(ev_id)][sta][1],
-                                    distance=kilometer2degree(src_dict[int(ev_id)][sta][0])))
+                                    distance=kilometer2degree(
+                                        float(src_dict[int(ev_id)][sta][0]))))
                 event.origins.append(new_origin)
         cat.write(self.output_event_file, format="quakeml")
 
