@@ -23,7 +23,7 @@ wav_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/stefan_sac/SAC/corrected'
 sta_file = '/Users/home/hoppche/data/stations/Mercury_Network_staxml.xml'
 
 # number of cores for parallel cross-correlation processing
-ncores = 25
+ncores = 20
 
 ### ph2dt Settings
 ph2dt_sets = {
@@ -35,20 +35,19 @@ ph2dt_sets = {
     # Maximum hypocentral separation between event pairs in kms. Set to ensure 
     # events within same spatial cluster are considered together whilst excluding
     # events that are obviously in different area
-    'MAXSEP' : 2,
+    'MAXSEP' : 4.,
     # Maximum number of neighbours per event. Should be high to allow all possible
     # events within geographic cluster defined by other parameters
     'MAXNGH' : 1000,
     # Minimum number of links required to define a neighbour
     'MINLNK' : 6,
     # Minimum number of links per pair
-    'MINOBS' : 1,
+    'MINOBS' : 4,
     # Max number of links per pair.
     # Should set to total number of stations to consider all phase pairs
     # within geographic cluster
     'MAXOBS' : 45
             }
-
 ### HypoDD Settings
 hypodd_sets = {
     # 1 = cross-corr only, 2 = absolute (cat) data only, 3 = cross-corr and catalog
@@ -80,18 +79,14 @@ hypodd_sets = {
     # WDCC, WDCT = Max event separation distance (cross-corr then cat) -999 to deactivate
     # DAMP = damping. Aim for condition numbers between about 40-80
                     #   Cross-corr Data   #    Catalog Data    #
-             # NITER  WTCCP WTCCS WRCC WDCC WTCTP  WTCTS  WRCT WDCT  DAMP
-    'iters' : ["   5  0.50  0.25    3    2   0.7    0.45    2    2   250",
-               "   5  0.50  0.25    2    1   0.7    0.35    2    2   200",
-               "   3  0.50  0.25    2    1   0.50   0.25    2   1.5  150",
-               "   3  0.70  0.35    2   0.75 0.30   0.15    2    1   100",
-               "   3  1.00  0.50    2   0.50 0.01   0.01    2  0.75  100"]
+             # NITER WTCCP WTCCS WRCC WDCC WTCTP WTCTS WRCT WDCT DAMP
+    'iters' : ["   8  0.10  0.05    5    5   0.9    0.45    5    5   400",
+               "   7  0.40  0.20    4    4   0.7    0.35    4    4   400",
+               "   6  0.50  0.25    3    3   0.50   0.25    3    3   300",
+               "   4  0.70  0.35    2    2   0.30   0.15    2    2   300"]
             }
 
 ### Cross-correlation Plotting
-# Event pair interval to output plots of cross-correlations (use 0 to turn off)
-cc_plot_int = 0
-
 
 """ 
     Relocator parameters
@@ -123,7 +118,7 @@ cc_plot_int = 0
         cross-correlation coefficient for a differential travel time to be
         accepted.
     """
-# Loopin it
+
 relocator = HypoDDRelocator(
     working_dir=work_dir,
     cc_time_before=0.05,
