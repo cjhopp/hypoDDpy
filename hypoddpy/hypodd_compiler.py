@@ -28,7 +28,7 @@ HYPODD_ARCHIVE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'src',
 # Note this Hash is from the tar.gz file you got, either change this to your
 # correct one using the function call hashlib.md5(open_file.read()).hexdigest()
 # or simply comment out the line: if md5_hash != HYPODD_MD5_HASH:    
-HYPODD_MD5_HASH = "312398d38c3003a0b2613e61ede67331"
+HYPODD_MD5_HASH = "ab3ebafa9302a7cbe4a84ae106c1f237"
 
 
 class HypoDDCompilationError(Exception):
