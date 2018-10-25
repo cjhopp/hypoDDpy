@@ -375,7 +375,7 @@ class HypoDDRelocator(object):
         if os.path.exists(phase_dat_file):
             self.log("phase.dat input file already exists.")
             return
-        print('Catalog has length: {}!'.format(len(self.events)))
+        print('Catalog has length: {}'.format(len(self.events)))
         event_strings = []
         for event in self.events:
             string = "# {year} {month} {day} {hour} {minute} " + \
@@ -664,13 +664,22 @@ class HypoDDRelocator(object):
                 fh.write(str(os.linesep))
             compiler = HypoDDCompiler(working_dir=self.working_dir,
                                       log_function=logfunc)
-            compiler.configure(MAXEVE=len(self.events) + 1,
-                               MAXEVE0=2,
-                               MAXDATA=12000000,
-                               MAXDATA0=1,
-                               MAXLAY=12,
-                               MAXCL=1,
-                               MAXSTA=len(self.stations))
+            if len(self.events) < 10000:
+                compiler.configure(MAXEVE=len(self.events) + 1,
+                                   MAXEVE0=2,
+                                   MAXDATA=12000000,
+                                   MAXDATA0=1,
+                                   MAXLAY=12,
+                                   MAXCL=1,
+                                   MAXSTA=len(self.stations))
+            else: # Hack for huge catalogs we wont use HypoDD on
+                compiler.configure(MAXEVE=5000,
+                                   MAXEVE0=2,
+                                   MAXDATA=12000000,
+                                   MAXDATA0=1,
+                                   MAXLAY=12,
+                                   MAXCL=1,
+                                   MAXSTA=len(self.stations))
             compiler.make()
 
     def _run_hypodd(self):
