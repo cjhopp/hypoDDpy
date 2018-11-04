@@ -1560,11 +1560,17 @@ def cross_correlate_evt_pairs(event_pair_list, waveform_information,
                     cc_param["cc_min_allowed_cross_corr_coeff"]:
                 continue
             # Otherwise calculate the corrected differential travel time.
-            diff_travel_time = ((pick_1["pick_time"] - event_1_dict["origin_time"]) -
-                                (pick_2["pick_time"] + pick2_corr - event_2_dict["origin_time"]))
+            try:
+                diff_travel_time = ((pick_1["pick_time"] -
+                                     event_1_dict["origin_time"]) -
+                                    (pick_2["pick_time"] + pick2_corr -
+                                     event_2_dict["origin_time"]))
                 #(pick_2["pick_time"] + pick2_corr -
                 #event_2_dict["origin_time"]) - (pick_1["pick_time"] -
                 #event_1_dict["origin_time"])
+            except ValueError:
+                # Have encountered instances of bad UTCDateTime's before.
+                continue
             string = "{station_id} {travel_time:.6f} {weight:.4f} {phase}"
             string = string.format(
                 station_id=pick_1["station_id"],
