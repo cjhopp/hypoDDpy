@@ -12,7 +12,7 @@ from hypoddpy.hypodd_relocator import HypoDDRelocator
 
 # Location of input QML catalog
 # cat_file = '/Volumes/GeoPhysics_07/users-data/hoppche/detections/det_cat_mcc0.4_shift0.2_ALL_LOCATED_uncert0.05.xml'
-cat_file = '/Users/home/hoppche/data/GNS_manual_picks_08-13manpicksGNS_rotokawa_12-13_w_NLLoc_Steve_model.xml'
+cat_file = '/Users/home/hoppche/data/GNS_manual_picks_08-13/manpicksGNS_rotokawa_12-13_w_NLLoc_Steve_model.xml'
 out_dir = '/Volumes/GeoPhysics_07/users-data/hoppche/hypoDD/GNS_Rot_manual_for_GC'
 out_file = 'Catalog_Rot_GNS_manual_1sec_0.6_for_GC.xml'
 work_dir = out_dir
